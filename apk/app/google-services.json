@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "281127476914",
+    "project_id": "vlora-garden",
+    "storage_bucket": "vlora-garden.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281127476914:android:bca39cbc851d026cf8f3ab",
+        "android_client_info": {
+          "package_name": "com.example.aplikacja"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5Q4soHMz3Df_qFGeSqib3_fZpOhm49kU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

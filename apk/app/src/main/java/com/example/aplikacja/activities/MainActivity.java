@@ -1,4 +1,4 @@
-package com.example.aplikacja;
+package com.example.aplikacja.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.example.aplikacja.R;
+import com.example.aplikacja.fragments.CameraFragment;
+import com.example.aplikacja.fragments.GardenFragment;
+import com.example.aplikacja.fragments.HomeFragment;
+import com.example.aplikacja.fragments.LoginFragment;
+import com.example.aplikacja.fragments.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.navCamera) {
                     changeFragment(new CameraFragment(), false);
                 } else if (itemId == R.id.navProfile) {
-                    changeFragment(new UserFragment(), false);
+                    changeFragment(new LoginFragment(), false);
                 }else{ // navGarden
                     changeFragment(new GardenFragment(), false);
                 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/leafgreen"
-    tools:context=".MainActivity" >
+    tools:context=".activities.MainActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -57,9 +57,9 @@
                 android:id="@+id/imageView"
                 android:layout_width="65dp"
                 android:layout_height="59dp"
-                android:src="@drawable/baseline_local_florist_24"
                 android:background="@drawable/icon_cover"
-                android:elevation="20dp"/>
+                android:elevation="20dp"
+                android:src="@drawable/baseline_local_florist_24" />
         </LinearLayout>
 
     </LinearLayout>
@@ -82,15 +82,15 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bottom_background"
-        app:itemPaddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:elevation="50dp"
         app:itemIconSize="30dp"
         app:itemIconTint="@drawable/item_selector"
+        app:itemPaddingBottom="10dp"
         app:itemRippleColor="@android:color/transparent"
         app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

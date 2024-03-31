@@ -1,10 +1,12 @@
-package com.example.aplikacja;
+package com.example.aplikacja.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.aplikacja.R;
 
 public class IntroActivity extends AppCompatActivity {
 
