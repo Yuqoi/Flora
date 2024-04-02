@@ -3,12 +3,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Login">Login</string>
-    <string name="Email">Email</string>
-    <string name="Password">Password</string>
+    <string name="Email">Podaj e-mail</string>
+    <string name="Password">Hasło</string>
     <string name="Register">Register</string>
-    <string name="click_to_login">Click to login</string>
-    <string name="click_to_register">Click to register</string>
-    <string name="logout">Logout</string>
+    <string name="click_to_login">Zaloguj sie</string>
+    <string name="click_to_register">Zarejestruj sie</string>
+    <string name="logout">Wyloguj</string>
+    <string name="podaj_nazwe_uzytkownika">Podaj nazwe uzytkownika</string>
+    <string name="o_aplikacji">O aplikacji</string>
 
     <!-- Strings related to login -->
 

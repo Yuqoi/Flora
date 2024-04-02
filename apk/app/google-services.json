@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "281127476914",
+    "firebase_url": "https://vlora-garden-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "vlora-garden",
     "storage_bucket": "vlora-garden.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.aplikacja"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "281127476914-sn7oi1pp978qp6tal1juj1efa0abrmsi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aplikacja",
+            "certificate_hash": "c47669bd239604f6cefd16f5f3b3a105d78cd577"
+          }
+        },
+        {
+          "client_id": "281127476914-1egu198vi5sp81sbit4js1u85eu1d9no.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC5Q4soHMz3Df_qFGeSqib3_fZpOhm49kU"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281127476914-1egu198vi5sp81sbit4js1u85eu1d9no.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -1,6 +1,7 @@
 package com.example.aplikacja.fragments;
 
-import android.content.Intent;
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,22 +21,31 @@ import android.widget.Toast;
 
 import com.example.aplikacja.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RegisterFragment extends Fragment {
 
-    TextInputEditText editTextEmail, editTextPassword;
+    TextInputEditText editTextEmail, editTextPassword, editUsernameText;
     Button buttonReg;
-    FirebaseAuth mAuth;
-
     ProgressBar progressBar;
-    TextView textView;
+    TextView changeScene;
 
+//    firebase
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+    String userID;
     @Override
     public void onStart() {
         super.onStart();
@@ -56,15 +66,18 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        editTextEmail = view.findViewById(R.id.email);
+        editTextEmail    = view.findViewById(R.id.email);
         editTextPassword = view.findViewById(R.id.password);
-        buttonReg = view.findViewById(R.id.btn_register);
+        editUsernameText = view.findViewById(R.id.username);
+        buttonReg        = view.findViewById(R.id.btn_register);
 
-        mAuth = FirebaseAuth.getInstance();
-        progressBar = view.findViewById(R.id.progressBar);
-        textView = view.findViewById(R.id.loginNow);
+        mAuth            = FirebaseAuth.getInstance();
+        progressBar      = view.findViewById(R.id.progressBar);
+        db               = FirebaseFirestore.getInstance();
+        changeScene      = view.findViewById(R.id.loginNow);
 
-        textView.setOnClickListener(new View.OnClickListener() {
+
+        changeScene.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginFragment lf = new LoginFragment();
@@ -80,9 +93,12 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String emailText, passwordText;
+                String emailText, passwordText, username;
+
                 emailText = String.valueOf(editTextEmail.getText());
                 passwordText = String.valueOf(editTextPassword.getText());
+                username = String.valueOf(editUsernameText.getText());
+
                 if (TextUtils.isEmpty(emailText)){
                     Toast.makeText(view.getContext(), "Enter email", Toast.LENGTH_SHORT).show();
                     return ;
@@ -90,6 +106,10 @@ public class RegisterFragment extends Fragment {
                 if (TextUtils.isEmpty(passwordText)){
                     Toast.makeText(view.getContext(), "Enter password", Toast.LENGTH_SHORT).show();
                     return ;
+                }
+                if (TextUtils.isEmpty(username) || username.length() > 20){
+                    Toast.makeText(view.getContext(), "Username too long or wrong", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 mAuth.createUserWithEmailAndPassword(emailText, passwordText)
@@ -102,6 +122,25 @@ public class RegisterFragment extends Fragment {
                                     Toast.makeText(view.getContext(), "Account created",
                                             Toast.LENGTH_SHORT).show();
 
+                                    userID = mAuth.getCurrentUser().getUid();
+
+                                    DocumentReference documentReference = db.collection("users").document(userID);
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("username", username);
+                                    user.put("email", emailText);
+                                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG, "user proifile is created for :" + userID);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(TAG, "Failure: " + e.toString());
+                                        }
+                                    });
+
+//                                    take person to user panel
                                     getParentFragmentManager().popBackStack();
 
                                     UserFragment userFragment = new UserFragment();
@@ -121,4 +160,6 @@ public class RegisterFragment extends Fragment {
 
         return view;
     }
+
+
 }

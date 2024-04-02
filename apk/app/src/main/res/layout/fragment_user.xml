@@ -6,26 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".fragments.UserFragment"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/leafgreen">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="user panel for logged people"
+        android:text="Milo cie widziec,"
         android:textColor="@color/black"
-        android:textAlignment="center" />
+        android:textSize="13dp"
+        android:textAlignment="center"/>
     <TextView
-        android:id="@+id/user_details"
-        android:layout_width="match_parent"
+        android:id="@+id/display_username"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="USERNAME"
         android:textColor="@color/black"
-        android:textAlignment="center" />
+        android:textSize="30dp"
+        android:textAlignment="center"
+
+        />
+
+    <View
+        android:layout_width="350dp"
+        android:layout_height="3dp"
+        android:background="?android:attr/listDivider" />
+
+    <Button
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/o_aplikacji"
+        android:layout_marginBottom="20dp"/>
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/logout"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="zmien haslo"/>
 
 </LinearLayout>

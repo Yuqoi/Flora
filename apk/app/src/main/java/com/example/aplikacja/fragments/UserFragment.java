@@ -23,7 +23,7 @@ public class UserFragment extends Fragment {
 
     FirebaseAuth auth;
     Button logout;
-    TextView user_details;
+    TextView username_details;
     FirebaseUser user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,7 +32,7 @@ public class UserFragment extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         logout = view.findViewById(R.id.logout);
-        user_details = view.findViewById(R.id.user_details);
+        username_details = view.findViewById(R.id.display_username);
 
         user = auth.getCurrentUser();
         if (user == null){
@@ -43,7 +43,7 @@ public class UserFragment extends Fragment {
                     .replace(R.id.frameLayout, loginFragment)
                     .commit();
         }else{
-            user_details.setText(user.getEmail());
+            username_details.setText(user.getEmail());
         }
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

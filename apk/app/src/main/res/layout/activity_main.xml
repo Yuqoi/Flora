@@ -32,11 +32,11 @@
                 android:text="Witaj," />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/welcome_user"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="user"
+                android:text="Miło cie widzieć, "
                 android:textSize="20sp" />
         </LinearLayout>
 
