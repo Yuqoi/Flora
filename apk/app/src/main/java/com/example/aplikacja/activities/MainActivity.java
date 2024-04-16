@@ -8,7 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aplikacja.R;
@@ -25,11 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
+    private LinearLayout topLayout;
 
     TextView welocomeUserText;
 
     FirebaseAuth auth;
     FirebaseUser user;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.frameLayout);
 
         welocomeUserText = findViewById(R.id.welcome_user);
+        topLayout = findViewById(R.id.topLayout);
 
 //        Check if user is logged
         auth = FirebaseAuth.getInstance();
@@ -81,4 +87,6 @@ public class MainActivity extends AppCompatActivity {
         }
         ft.commit();
     }
+
+
 }

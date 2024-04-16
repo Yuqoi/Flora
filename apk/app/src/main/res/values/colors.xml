@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="babyblue">#8AAAE5</color>
-    <color name="leafgreen">#2B5141</color>
+    <color name="leafgreen"> #669966</color>
     <color name="navyblue">#87ceeb</color>
+    <color name="vibrantred">#FF4444</color>
 </resources>

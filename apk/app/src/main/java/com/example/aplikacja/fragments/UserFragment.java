@@ -16,25 +16,43 @@ import android.widget.TextView;
 import com.example.aplikacja.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.auth.User;
+
+import java.util.Objects;
+import java.util.concurrent.Executor;
 
 
 public class UserFragment extends Fragment {
 
 
-    FirebaseAuth auth;
+
     Button logout;
     TextView username_details;
+
+    FirebaseAuth auth;
+    FirebaseFirestore fStore;
     FirebaseUser user;
+    String userID;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
-        auth = FirebaseAuth.getInstance();
+
         logout = view.findViewById(R.id.logout);
         username_details = view.findViewById(R.id.display_username);
 
+//        database
+        auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        fStore = FirebaseFirestore.getInstance();
+
+
         if (user == null){
             getParentFragmentManager().popBackStack();
 
@@ -43,7 +61,19 @@ public class UserFragment extends Fragment {
                     .replace(R.id.frameLayout, loginFragment)
                     .commit();
         }else{
-            username_details.setText(user.getEmail());
+            String userID = auth.getCurrentUser().getUid();
+            if (!userID.isEmpty()){
+                DocumentReference documentReference = fStore.collection("users").document(userID);
+
+                documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        username_details.setText(value.getString("username"));
+                    }
+                });
+            }
+
+
         }
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,23 +90,6 @@ public class UserFragment extends Fragment {
         return view;
     }
 
-    private void replaceFragment(Fragment fragment) {
-        // Get the FragmentManager
-        FragmentManager fragmentManager = getParentFragmentManager();
 
-        // Start a FragmentTransaction
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        // Replace the current fragment with the new fragment
-        transaction.replace(R.id.frameLayout, fragment);
-
-        // Add the transaction to the back stack
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-    public View getViewFromFragment(Fragment fragment) {
-        return fragment.getView();
-    }
 }

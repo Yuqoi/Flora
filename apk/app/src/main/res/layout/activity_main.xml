@@ -8,7 +8,7 @@
     tools:context=".activities.MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:background="@drawable/top_background"
@@ -70,7 +70,7 @@
         android:layout_height="0dp"
 
         app:layout_constraintBottom_toTopOf="@id/bottomNavView"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@id/topLayout"
         app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="75dp" />
 
