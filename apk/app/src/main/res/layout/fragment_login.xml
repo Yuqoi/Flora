@@ -112,7 +112,6 @@
             android:layout_marginTop="50sp"
             android:textAlignment="center"
             android:text="Nie masz jeszcze konta?\n Zarejestuj sie"
-
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
