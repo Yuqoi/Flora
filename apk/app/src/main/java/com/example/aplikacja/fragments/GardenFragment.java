@@ -58,19 +58,19 @@ public class GardenFragment extends Fragment {
 //        Find root layout
 
 
-        addFlowersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FlowersFragment fragment = new FlowersFragment();
-                FragmentManager manager = getParentFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-
-                transaction.replace(R.id.frameLayout, fragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
+//        addFlowersBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FlowersFragment fragment = new FlowersFragment();
+//                FragmentManager manager = getParentFragmentManager();
+//                FragmentTransaction transaction = manager.beginTransaction();
+//
+//                transaction.replace(R.id.frameLayout, fragment)
+//                        .addToBackStack(null)
+//                        .commit();
+//            }
+//        });
+//
         return view;
     }
 

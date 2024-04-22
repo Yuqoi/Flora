@@ -2,6 +2,7 @@ package com.example.aplikacja.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,15 +20,21 @@ import com.example.aplikacja.fragments.GardenFragment;
 import com.example.aplikacja.fragments.HomeFragment;
 import com.example.aplikacja.fragments.LoginFragment;
 import com.example.aplikacja.fragments.UserFragment;
+import com.example.aplikacja.helpers.FragmentHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentHelper {
 
     private BottomNavigationView bottomNavigationView;
-    private FrameLayout frameLayout;
-    private LinearLayout topLayout;
+    private FrameLayout frameContainer;
+
+    private CardView profileView;
+    private CardView kameraView;
+    private CardView ogrodView;
+    private CardView poradnikView;
+    private CardView naukaView;
 
     TextView welocomeUserText;
 
@@ -42,19 +49,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavView);
-        frameLayout = findViewById(R.id.frameLayout);
-
-        welocomeUserText = findViewById(R.id.welcome_user);
-        topLayout = findViewById(R.id.topLayout);
+        frameContainer = findViewById(R.id.fragment_container);
+//        frameLayout = findViewById(R.id.frameLayout);
+//
+//        welocomeUserText = findViewById(R.id.welcome_user);
+//        topLayout = findViewById(R.id.topLayout);
 
 //        Check if user is logged
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        if (user == null){
-            welocomeUserText.setText("Nie jestes zalogowany");
-        }else{
-            welocomeUserText.setText(user.getEmail());
-        }
+
+
+
+//        profileView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                replaceFragment(new UserFragment());
+//            }
+//        });
+
+
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -63,12 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
                 if (itemId == R.id.navHome){
                     changeFragment(new HomeFragment(), false);
-                } else if (itemId == R.id.navCamera) {
-                    changeFragment(new CameraFragment(), false);
-                } else if (itemId == R.id.navProfile) {
-                    changeFragment(new LoginFragment(), false);
-                }else{ // navGarden
-                    changeFragment(new GardenFragment(), false);
                 }
 
                 return true;
@@ -77,16 +87,23 @@ public class MainActivity extends AppCompatActivity {
         changeFragment(new HomeFragment(), true);
     }
 
-    private void changeFragment(Fragment fragment, boolean isInitialized){
+
+
+
+    @Override
+    public void changeFragment(Fragment fragment, boolean isInitialized) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if (isInitialized) {
-            ft.add(R.id.frameLayout, fragment);
+            ft.add(R.id.fragment_container, fragment);
         }else{
-            ft.replace(R.id.frameLayout, fragment);
+            ft.replace(R.id.fragment_container, fragment);
         }
         ft.commit();
     }
 
+    @Override
+    public void changeFragment(Fragment fragment) {
 
+    }
 }

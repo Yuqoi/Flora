@@ -56,7 +56,7 @@ public class RegisterFragment extends Fragment {
 
             UserFragment userFragment = new UserFragment();
             getParentFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, userFragment)
+                    .replace(R.id.fragment_container, userFragment)
                     .commit();
         }
     }
@@ -84,7 +84,7 @@ public class RegisterFragment extends Fragment {
                 FragmentManager manager = getParentFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
 
-                transaction.replace(R.id.frameLayout, lf);
+                transaction.replace(R.id.fragment_container, lf);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -145,7 +145,7 @@ public class RegisterFragment extends Fragment {
 
                                     UserFragment userFragment = new UserFragment();
                                     getParentFragmentManager().beginTransaction()
-                                            .replace(R.id.frameLayout, userFragment)
+                                            .replace(R.id.fragment_container, userFragment)
                                             .commit();
 
                                 } else {

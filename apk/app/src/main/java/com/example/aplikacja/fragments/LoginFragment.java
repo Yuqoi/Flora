@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -36,16 +37,15 @@ import com.google.firebase.database.FirebaseDatabase;
 public class LoginFragment extends Fragment {
 
     TextInputEditText editTextEmail, editTextPassword;
-    Button buttonLog;
+    AppCompatButton buttonLog;
+
 
     FirebaseAuth mAuth;
+
 
     ProgressBar progressBar;
     TextView textView;
 
-    /***
-     * Zmienic bo ma sie to inicjowac za kazdym razem gdy wchodze w aplikacje
-     */
     @Override
     public void onStart() {
         super.onStart();
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment {
 
             UserFragment userFragment = new UserFragment();
             getParentFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, userFragment)
+                    .replace(R.id.fragment_container, userFragment)
                     .commit();
         }
     }
@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment {
         editTextEmail = view.findViewById(R.id.email);
         editTextPassword = view.findViewById(R.id.password);
         buttonLog = view.findViewById(R.id.btn_login);
-
+//
         mAuth = FirebaseAuth.getInstance();
         progressBar = view.findViewById(R.id.progressBar);
         textView = view.findViewById(R.id.registerNow);
@@ -81,7 +81,7 @@ public class LoginFragment extends Fragment {
                 FragmentManager manager = getParentFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
 
-                transaction.replace(R.id.frameLayout, lf);
+                transaction.replace(R.id.fragment_container, lf);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -116,7 +116,7 @@ public class LoginFragment extends Fragment {
 
                                     UserFragment userFragment = new UserFragment();
                                     getParentFragmentManager().beginTransaction()
-                                            .replace(R.id.frameLayout, userFragment)
+                                            .replace(R.id.fragment_container, userFragment)
                                             .commit();
                                 } else {
                                     Toast.makeText(view.getContext(), "Authentication failed.",

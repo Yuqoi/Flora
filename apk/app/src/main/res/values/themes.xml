@@ -7,7 +7,8 @@
 
     </style>
     <style name="CustomFontStyle">
-        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <style name="Theme.Aplikacja" parent="Base.Theme.Aplikacja" />
 

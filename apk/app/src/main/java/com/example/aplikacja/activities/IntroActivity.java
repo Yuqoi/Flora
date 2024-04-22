@@ -26,7 +26,7 @@ public class IntroActivity extends AppCompatActivity {
         if (isFirstTime){
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("firstTime", false);
-            editor.commit();
+            editor.apply();
         }else{
             Intent intent = new Intent(IntroActivity.this, MainActivity.class);
             startActivity(intent);

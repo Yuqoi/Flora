@@ -1,7 +1,6 @@
-package com.example.aplikacja.Adapters;
+package com.example.aplikacja.adapters;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
-import com.example.aplikacja.Listeners.SelectListener;
 import com.example.aplikacja.R;
+import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;

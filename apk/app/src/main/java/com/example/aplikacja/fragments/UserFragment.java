@@ -58,7 +58,7 @@ public class UserFragment extends Fragment {
 
             LoginFragment loginFragment = new LoginFragment();
             getParentFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, loginFragment)
+                    .replace(R.id.fragment_container, loginFragment)
                     .commit();
         }else{
             String userID = auth.getCurrentUser().getUid();
@@ -83,7 +83,7 @@ public class UserFragment extends Fragment {
 
                 LoginFragment loginFragment = new LoginFragment();
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.frameLayout, loginFragment)
+                        .replace(R.id.fragment_container, loginFragment)
                         .commit();
             }
         });
