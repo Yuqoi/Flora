@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/navHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:icon="@drawable/home_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:title="Home" />
+    <item
+        android:id="@+id/navGarden"
+        android:title="Moj Ogród"
+        android:icon="@drawable/garden_icon"/>
+    <item
+        android:id="@+id/navCamera"
+        android:icon="@drawable/camera_icon"
+        android:title="Kamera" />
+    <item
+        android:id="@+id/navProfile"
+        android:icon="@drawable/user_icon"
+        android:title="Profil" />
 
 </menu>

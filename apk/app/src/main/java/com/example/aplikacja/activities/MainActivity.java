@@ -50,23 +50,10 @@ public class MainActivity extends AppCompatActivity implements FragmentHelper {
 
         bottomNavigationView = findViewById(R.id.bottomNavView);
         frameContainer = findViewById(R.id.fragment_container);
-//        frameLayout = findViewById(R.id.frameLayout);
-//
-//        welocomeUserText = findViewById(R.id.welcome_user);
-//        topLayout = findViewById(R.id.topLayout);
 
 //        Check if user is logged
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
-
-
-//        profileView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                replaceFragment(new UserFragment());
-//            }
-//        });
 
 
 
@@ -77,8 +64,14 @@ public class MainActivity extends AppCompatActivity implements FragmentHelper {
 
                 int itemId = item.getItemId();
 
-                if (itemId == R.id.navHome){
+                if (itemId == R.id.navHome) {
                     changeFragment(new HomeFragment(), false);
+                } else if (itemId == R.id.navGarden) {
+                    changeFragment(new GardenFragment(), false);
+                } else if (itemId == R.id.navCamera) {
+                    changeFragment(new CameraFragment(), false);
+                }else{ // profile fragment
+                    changeFragment(new UserFragment(), false);
                 }
 
                 return true;

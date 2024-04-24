@@ -4,16 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-40sp"
-        android:layout_marginBottom="-130sp"
-        android:src="@drawable/frame_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+    tools:context=".activities.MainActivity"
+    android:background="@color/bgcolor"
+    >
+
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -22,25 +16,20 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNavView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavView"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bottom_background"
-        android:elevation="50dp"
-        app:itemIconSize="30dp"
-        app:itemPaddingBottom="10dp"
-        app:itemRippleColor="@android:color/transparent"
-        app:labelVisibilityMode="unlabeled"
+        android:background="@color/pinkblush"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:itemIconSize="35dp"
+        app:itemPaddingBottom="10dp"
         app:menu="@menu/bottom_nav_menu" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

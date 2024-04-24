@@ -8,4 +8,5 @@
     <color name="pinkblush">#FE828C</color>
     <color name="lightgreen">#8cfeab</color>
     <color name="lightorange">#fecb8c</color>
+    <color name="bgcolor">#F8F8F8</color>
 </resources>
