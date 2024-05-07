@@ -1,10 +1,10 @@
-package com.example.aplikacja.adapters;
+package com.example.aplikacja.helpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import com.google.android.material.imageview.ShapeableImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aplikacja.R;
-import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class FlowerAdapter extends RecyclerView.Adapter<FlowerAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.item, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.flower_item, parent, false);
 
         return new MyViewHolder(v);
     }
@@ -49,10 +48,11 @@ public class FlowerAdapter extends RecyclerView.Adapter<FlowerAdapter.MyViewHold
         Flower flower = list.get(position);
 
         holder.flowerName.setText(flower.getName());
+        holder.flowerDescription.setText(flower.getDesc());
         Glide.with(context.getApplicationContext())
                 .load(flower.getImage())
-                .placeholder(R.drawable.user_icon)
-                .error(R.drawable.home_icon)
+                .placeholder(R.drawable.reload_icon)
+                .error(R.drawable.error_icon)
                 .into(holder.flowerImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -79,13 +79,16 @@ public class FlowerAdapter extends RecyclerView.Adapter<FlowerAdapter.MyViewHold
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView flowerName;
-        ImageView flowerImage;
+        TextView flowerDescription;
+
+        ShapeableImageView flowerImage;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             flowerName = itemView.findViewById(R.id.flowerName);
             flowerImage = itemView.findViewById(R.id.flowerImage);
-
+            flowerDescription = itemView.findViewById(R.id.flowerDescription);
         }
     }
 }

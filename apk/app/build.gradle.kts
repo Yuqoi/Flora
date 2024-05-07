@@ -1,3 +1,5 @@
+import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
@@ -33,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

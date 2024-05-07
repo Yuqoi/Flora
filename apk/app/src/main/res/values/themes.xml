@@ -4,14 +4,45 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:textViewStyle">@style/CustomFontStyle</item>
-        <item name="colorPrimary">@color/bgcolor</item>
-        <item name="colorPrimaryVariant">@color/pinkblush</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimary">@color/bgdark</item>
+        <item name="colorPrimaryVariant">@color/grayish</item>
+        <item name="android:statusBarColor">@color/bgdark</item>
     </style>
+
     <style name="CustomFontStyle">
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textColor">@color/black</item>
     </style>
-    <style name="Theme.Aplikacja" parent="Base.Theme.Aplikacja" />
+
+    <style name="RoundedSquare">
+        <item name="cornerSize">20%</item>
+    </style>
+
+<!--    TODO: repair this-->
+    <style name="RoundedBottom">
+        <item name="cornerSizeBottomLeft">20%</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomRight">20%</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
+    <style name="GridLayoutTextStyleForVariables">
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="GridLayoutTextStyleForNaming">
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
 
 </resources>

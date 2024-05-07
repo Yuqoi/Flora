@@ -9,16 +9,27 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.view.animation.AnimationUtils;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aplikacja.activities.FlowerActivity;
 import com.example.aplikacja.R;
 
 import com.example.aplikacja.helpers.FragmentHelper;
+import com.example.aplikacja.helpers.HomeFlowerAdapter;
+import com.example.aplikacja.models.Flower;
+import com.example.aplikacja.models.FlowerSharedPreferences;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
 
 
 public class HomeFragment extends Fragment implements FragmentHelper {
@@ -30,6 +41,8 @@ public class HomeFragment extends Fragment implements FragmentHelper {
     CardView nauka;
 
     SearchView searchView;
+    RecyclerView flowersRecyclerView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,9 +54,15 @@ public class HomeFragment extends Fragment implements FragmentHelper {
         twojogrod = view.findViewById(R.id.twoj_ogrod_view);
         poradniki = view.findViewById(R.id.poradnik_view);
         nauka = view.findViewById(R.id.nauka_view);
-
-
         searchView = view.findViewById(R.id.search_bar);
+        flowersRecyclerView = view.findViewById(R.id.home_flowers_recyclerview);
+
+        FlowerSharedPreferences prefs = new FlowerSharedPreferences(view.getContext());
+        List<Flower> flowerList = prefs.getSelectedFlowers();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        flowersRecyclerView.setLayoutManager(layoutManager);
+        flowersRecyclerView.setAdapter(new HomeFlowerAdapter(view.getContext(), flowerList));
 
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +74,6 @@ public class HomeFragment extends Fragment implements FragmentHelper {
         });
 
         clickListener();
-
 
         return view;
     }

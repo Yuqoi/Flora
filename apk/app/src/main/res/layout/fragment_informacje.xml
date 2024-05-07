@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.InformacjeFragment">
+
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/info_flowername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nazwa rosliny"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:textAlignment="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/info_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Opis"
+                    android:textColor="@color/lightorange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/info_flowerdesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="12dp"
+                android:text="  rodzaj bylin należących do rodziny storczykowatych (Orchidaceae). W zależności od ujęcia systematycznego klasyfikowanych jest do tego rodzaju od 17 do 33 gatunków, przy czym większa liczba podawana jest w starszych klasyfikacjach. Po odkryciu, w końcu lat 90. XX wieku, polifiletycznego charakteru rodzaju w tradycyjnym ujęciu, część zaliczanych tu gatunków przeniesiona została przez taksonomów do rodzajów koślaczek (Anacamptis) i Neotinea[6][7]. Gatunkiem typowym jest storczyk kukawka (Orchis militaris L.)"
+                android:textSize="15sp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="italic" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="3"
+                android:columnCount="2"
+                android:background="@drawable/table_background_info"
+                android:layout_margin="5dp"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:text="Utrzymanie"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    />
+                <TextView
+                    android:id="@+id/info_difficulty"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Utrzymanie"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:text="Toksyczność"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    />
+                <TextView
+                    android:id="@+id/info_toxicity"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="toxicicty"/>
+            </GridLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/key_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Użyteczność"
+                    android:textColor="@color/lightorange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/info_usability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="15sp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="10dp"
+                android:text="uzytecznos ctych kwiatow" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/key_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Podatność na szkodniki"
+                    android:textColor="@color/lightorange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/info_susceptibility_to_pests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="15sp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="10dp"
+                android:text="szkodniki" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/key_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Najważniejsze informacje"
+                    android:textColor="@color/lightorange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="4"
+                android:columnCount="2"
+                android:layout_margin="5dp"
+                android:background="@drawable/table_background_info"
+                android:padding="15dp">
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="Występowane kolory" />
+
+                <TextView
+                    android:id="@+id/info_flower_colors"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Czerwony, Biały, Niebieski" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="Rodzina" />
+
+                <TextView
+                    android:id="@+id/info_flower_family"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Asterowate" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="Czas rozkwitu" />
+
+                <TextView
+                    android:id="@+id/info_flower_bloom"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Wiosna do lata" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="śr. Wzrost" />
+
+                <TextView
+                    android:id="@+id/info_flower_height"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="5-20cm" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="śr. Rozrzut" />
+
+                <TextView
+                    android:id="@+id/info_flower_spread"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="10-30cm" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="Występowanie" />
+
+                <TextView
+                    android:id="@+id/info_flower_region"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Stokrotki występują naturalnie w Europie i Azji." />
+            </GridLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/zapotrzebowanie_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Zapotrzebowania"
+                    android:textColor="@color/lightorange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="4"
+                android:columnCount="2"
+                android:layout_margin="5dp"
+                android:background="@drawable/table_background_info"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="Typ gleby" />
+
+                <TextView
+                    android:id="@+id/info_flower_soil"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Dobrze drenowana, próchnicza gleba" />
+
+
+
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="Wymagania słoneczne" />
+
+                <TextView
+                    android:id="@+id/info_flower_sun"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Cień lub półcień" />
+
+
+
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForNaming"
+                    android:text="Wymagania nawodnienia" />
+
+                <TextView
+                    android:id="@+id/info_flower_watering"
+                    android:layout_height="wrap_content"
+                    style="@style/GridLayoutTextStyleForVariables"
+                    android:text="Asterowate" />
+
+
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

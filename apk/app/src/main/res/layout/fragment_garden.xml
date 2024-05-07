@@ -6,21 +6,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.GardenFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bgcolor">
 
 
-   <FrameLayout
+   <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="50dp">
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_margin="8dp">
+         <androidx.appcompat.widget.SearchView
+             android:layout_width="250dp"
+             android:layout_height="wrap_content"
+             android:background="@drawable/search_view_bg"
+             />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center">
+           <com.google.android.material.imageview.ShapeableImageView
+               android:id="@+id/remove_garden"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:src="@drawable/remove_icon"/>
+           <com.google.android.material.imageview.ShapeableImageView
+               android:id="@+id/mygarden_addflower_btn"
+               android:layout_marginLeft="5dp"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:src="@drawable/add_icon"/>
+       </LinearLayout>
+   </LinearLayout>
 
-      <Button
-          android:id="@+id/addFlowersBtn"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:text="Dodaj kwiaty" />
-   </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:text="Mój Ogródek"
+        android:textAlignment="center"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mygarden_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>
