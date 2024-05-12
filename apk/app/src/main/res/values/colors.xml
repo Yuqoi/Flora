@@ -2,13 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="fontcolor">#E0E0E0</color>
     <color name="babyblue">#8AAAE5</color>
     <color name="leafgreen"> #669966</color>
     <color name="navyblue">#87ceeb</color>
     <color name="pinkblush">#FE828C</color>
     <color name="lightgreen">#8cfeab</color>
     <color name="lightorange">#fecb8c</color>
-    <color name="bgcolor">#F8F8F8</color>
     <color name="purplemagnolia">#9370DB</color>
     <color name="grayish">#474747</color>
     <color name="bgdark">#333333</color>

@@ -1,25 +1,23 @@
 package com.example.aplikacja.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.SearchView;
+import com.google.android.material.search.SearchBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aplikacja.R;
-import com.example.aplikacja.helpers.FlowerAdapter;
+import com.example.aplikacja.adapter.FlowerAdapter;
 import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
-import com.example.aplikacja.models.FlowerSharedPreferences;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,9 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class FlowerActivity extends AppCompatActivity {
 
@@ -92,7 +88,8 @@ public class FlowerActivity extends AppCompatActivity {
                             (String) dataSnapshot.child("toxicity").getValue(),
                             (String) dataSnapshot.child("susceptibilityToPests").getValue(),
                             (String) dataSnapshot.child("usability").getValue(),
-                            (String) dataSnapshot.child("difficulty").getValue());
+                            (String) dataSnapshot.child("difficulty").getValue(),
+                            dataSnapshot.child("whenToWater").getValue(Integer.class));
                     list.add(flower);
                 }
                 flowerAdapter.notifyDataSetChanged();
@@ -113,10 +110,12 @@ public class FlowerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
@@ -127,6 +126,14 @@ public class FlowerActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+    private void showInputMethod(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(view, 0);
+        }
     }
 
     private void filter(String newText) {

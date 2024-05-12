@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.SelectedFlower">
+    tools:context=".activities.SelectedFlower"
+    android:background="@color/bgdark">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/pinkblush"
+        android:background="@color/bgdark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -90,7 +91,7 @@
                     android:layout_height="2dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:background="@color/pinkblush" />
+                    android:background="@color/grayish" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -118,7 +119,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Opis"
-                        android:textColor="@color/lightorange"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginRight="12dp"
                     android:text="  rodzaj bylin należących do rodziny storczykowatych (Orchidaceae). W zależności od ujęcia systematycznego klasyfikowanych jest do tego rodzaju od 17 do 33 gatunków, przy czym większa liczba podawana jest w starszych klasyfikacjach. Po odkryciu, w końcu lat 90. XX wieku, polifiletycznego charakteru rodzaju w tradycyjnym ujęciu, część zaliczanych tu gatunków przeniesiona została przez taksonomów do rodzajów koślaczek (Anacamptis) i Neotinea[6][7]. Gatunkiem typowym jest storczyk kukawka (Orchis militaris L.)"
                     android:textSize="15sp"
@@ -138,8 +138,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
+                    android:layout_margin="12dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -152,7 +151,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Najważniejsze informacje"
-                        android:textColor="@color/lightorange"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -234,8 +232,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
+                    android:layout_margin="12dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -248,7 +245,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Zapotrzebowania"
-                        android:textColor="@color/lightorange"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -308,14 +304,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/pinkblush"
+        android:background="@color/bgdark"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_selected_flower"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"

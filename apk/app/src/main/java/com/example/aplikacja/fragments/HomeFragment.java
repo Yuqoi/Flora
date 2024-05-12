@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,11 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aplikacja.activities.FlowerActivity;
 import com.example.aplikacja.R;
 
+import com.example.aplikacja.activities.NaukaActivity;
 import com.example.aplikacja.helpers.FragmentHelper;
-import com.example.aplikacja.helpers.HomeFlowerAdapter;
+import com.example.aplikacja.adapter.HomeFlowerAdapter;
 import com.example.aplikacja.models.Flower;
 import com.example.aplikacja.models.FlowerSharedPreferences;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -37,12 +35,12 @@ public class HomeFragment extends Fragment implements FragmentHelper {
     CardView mojprofil;
     CardView kamerai;
     CardView twojogrod;
-    CardView poradniki;
     CardView nauka;
 
     SearchView searchView;
     RecyclerView flowersRecyclerView;
 
+    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,30 +50,43 @@ public class HomeFragment extends Fragment implements FragmentHelper {
         mojprofil = view.findViewById(R.id.moj_profil_view);
         kamerai = view.findViewById(R.id.kamera_view);
         twojogrod = view.findViewById(R.id.twoj_ogrod_view);
-        poradniki = view.findViewById(R.id.poradnik_view);
         nauka = view.findViewById(R.id.nauka_view);
         searchView = view.findViewById(R.id.search_bar);
         flowersRecyclerView = view.findViewById(R.id.home_flowers_recyclerview);
-
+        textView = view.findViewById(R.id.home_check_text);
         FlowerSharedPreferences prefs = new FlowerSharedPreferences(view.getContext());
-        List<Flower> flowerList = prefs.getSelectedFlowers();
+        List<Flower> flowerList = prefs.getFlowers();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         flowersRecyclerView.setLayoutManager(layoutManager);
         flowersRecyclerView.setAdapter(new HomeFlowerAdapter(view.getContext(), flowerList));
 
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FlowerActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
+
+        setSearchView();
 
         clickListener();
 
         return view;
+    }
+    private void setSearchView(){
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSearchIntent();
+            }
+        });
+
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSearchIntent();
+            }
+        });
+    }
+    private void showSearchIntent(){
+        Intent intent = new Intent(getContext(), FlowerActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void clickListener(){
@@ -97,16 +108,10 @@ public class HomeFragment extends Fragment implements FragmentHelper {
                 changeFragment(new GardenFragment());
             }
         });
-        poradniki.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeFragment(new CameraFragment());
-            }
-        });
         nauka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFragment(new CameraFragment());
+                changeIntent(new NaukaActivity());
             }
         });
     }
@@ -121,6 +126,13 @@ public class HomeFragment extends Fragment implements FragmentHelper {
         FragmentManager fm = getParentFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
+        ft.addToBackStack(null);
         ft.commit();
+    }
+
+    private void changeIntent(Object i){
+        Intent intent = new Intent(getContext(), i.getClass());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

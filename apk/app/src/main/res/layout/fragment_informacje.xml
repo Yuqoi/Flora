@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.InformacjeFragment">
-
-
-
-
+    tools:context=".fragments.InformacjeFragment"
+    android:background="@color/grayish">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,6 +22,14 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_margin="8dp"
+                android:textAlignment="center"/>
+            <TextView
+                android:id="@+id/info_flowerscientificname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nazwa rosliny naukowa"
+                android:textSize="15sp"
+                android:textStyle="italic"
                 android:textAlignment="center"/>
 
             <LinearLayout
@@ -44,7 +49,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Opis"
-                    android:textColor="@color/lightorange"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -67,7 +71,7 @@
                 android:rowCount="3"
                 android:columnCount="2"
                 android:background="@drawable/table_background_info"
-                android:layout_margin="5dp"
+                android:layout_marginBottom="18dp"
                 android:padding="15dp">
 
                 <TextView
@@ -102,14 +106,13 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/key_icon" />
+                    android:src="@drawable/use_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Użyteczność"
-                    android:textColor="@color/lightorange"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -123,7 +126,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="18dp"
                 android:text="uzytecznos ctych kwiatow" />
 
             <LinearLayout
@@ -136,14 +139,13 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/key_icon" />
+                    android:src="@drawable/bugs_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Podatność na szkodniki"
-                    android:textColor="@color/lightorange"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -157,7 +159,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="18dp"
                 android:text="szkodniki" />
 
 
@@ -178,7 +180,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Najważniejsze informacje"
-                    android:textColor="@color/lightorange"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -188,7 +189,6 @@
                 android:layout_height="wrap_content"
                 android:rowCount="4"
                 android:columnCount="2"
-                android:layout_margin="5dp"
                 android:background="@drawable/table_background_info"
                 android:padding="15dp">
                 <TextView
@@ -275,7 +275,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Zapotrzebowania"
-                    android:textColor="@color/lightorange"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -285,7 +284,6 @@
                 android:layout_height="wrap_content"
                 android:rowCount="4"
                 android:columnCount="2"
-                android:layout_margin="5dp"
                 android:background="@drawable/table_background_info"
                 android:padding="15dp">
 

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LoginFragment">
+    tools:context=".fragments.LoginFragment"
+    android:background="@color/bgdark">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -18,7 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/pinkblush">
+            android:background="@color/purplemagnolia">
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,7 +43,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="270dp"
-        android:background="@drawable/panel_style"
+        android:background="@drawable/panel_style_loginregister"
         android:elevation="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,9 +99,10 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
             android:layout_width="150dp"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/custom_button"
+            android:textAllCaps="false"
             android:layout_marginTop="20dp"
             android:elevation="8dp"
             android:text="Zaloguj sie" />

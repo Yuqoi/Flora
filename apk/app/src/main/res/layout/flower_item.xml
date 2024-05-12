@@ -23,7 +23,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/RoundedSquare"
-            app:strokeColor="@color/pinkblush"
+            app:strokeColor="@color/purplemagnolia"
             app:strokeWidth="3.5dp"
             android:elevation="8dp"/>
         <LinearLayout

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements FragmentHelper {
                     changeFragment(new GardenFragment(), false);
                 } else if (itemId == R.id.navCamera) {
                     changeFragment(new CameraFragment(), false);
-                }else{ // profile fragment
+                } else{ // profile fragment
                     changeFragment(new UserFragment(), false);
                 }
 

@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Aplikacja"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.NaukaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.WaterNotification"
+            android:exported="false" />
         <activity
             android:name=".activities.MyGardenSelectedFlower"
             android:exported="false" />
@@ -33,6 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".helpers.AlarmReceiver" />
+
         <activity
             android:name=".activities.MainActivity"
             android:exported="true"

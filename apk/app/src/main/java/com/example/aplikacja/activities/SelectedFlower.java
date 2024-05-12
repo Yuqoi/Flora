@@ -98,8 +98,13 @@ public class SelectedFlower extends AppCompatActivity {
             public void onClick(View v) {
                 FlowerSharedPreferences preferences = new FlowerSharedPreferences(SelectedFlower.this);
                 preferences.addSelectedFlower(flower);
-                // Optionally, you can show a message indicating the flower has been added
-                Toast.makeText(SelectedFlower.this, "Kwiat zostal dodany", Toast.LENGTH_SHORT).show();
+                System.out.println(preferences.getIsDuplicated());
+                if (preferences.getIsDuplicated()){
+                    Toast.makeText(SelectedFlower.this, "Kwiat jest w ogrodzie", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(SelectedFlower.this, "Kwiat zostal dodany", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MyGardenSelectedFlower">
+    tools:context=".activities.MyGardenSelectedFlower"
+    android:background="@color/bgdark">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/pinkblush"
+        android:background="@color/bgdark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -43,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mygarden_image" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:background="@color/pinkblush"
+        android:background="@color/grayish"
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -56,15 +57,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
-        app:tabGravity="fill"
-        app:tabIndicatorAnimationMode="elastic"
-        app:tabIndicatorGravity="stretch"
-        app:tabSelectedTextColor="@color/lightorange"
-        app:tabIndicatorColor="@null"
-        app:tabIndicator="@drawable/tablayout_indicator"
+        app:tabGravity="center"
+        app:tabIndicator="@null"
+        app:tabSelectedTextColor="@color/purplemagnolia"
+        app:tabTextColor="@color/fontcolor"
+        app:tabBackground="@drawable/tabs_selector"
+        android:background="@color/bgdark"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/pinkblush"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.tabs.TabItem

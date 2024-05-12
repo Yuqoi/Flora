@@ -9,6 +9,27 @@
     <string name="logout">Wyloguj</string>
     <string name="podaj_nazwe_uzytkownika">Podaj nazwe uzytkownika</string>
     <string name="o_aplikacji">O aplikacji</string>
+    <string name="nauka_tekst1">\t\tZrozumienie warunków panujących w Twoim ogrodzie to kluczowy krok w osiągnięciu sukcesu w uprawie roślin. Oto kilka ważnych czynników do rozważenia:
+        \n\t\t<b>Typ i skład gleby</b>: Zbadaj, czy Twoja gleba jest żyzna czy uboga w składniki pokarmowe. To pomoże Ci dobrać odpowiednie rośliny, które będą trwałe i zdrowe.
+        \n\t\t<b>Ekspozycja ogrodu</b>: Określ, czy Twoje rabaty są silnie nasłonecznione, czy też bardziej zacienione i wietrzne.
+        Ten czynnik wpłynie na wybór roślin, ponieważ niektóre gatunki lepiej rosną w słońcu, podczas gdy inne preferują cień.
+        \n\t\t<b>Wybór odmian roślin</b>: Na podstawie analizy warunków glebowych i ekspozycji ogrodu, dobierz odmiany roślin, które najlepiej będą trwać w tych warunkach.
+        Dostosuj się do ich potrzeb, aby zapewnić im optymalne warunki wzrostu.
+        \n\t\t<b>Regularna pielęgnacja</b>: Po wyborze odpowiednich roślin, pamiętaj o regularnej pielęgnacji ogrodu, takiej jak podlewanie, nawożenie i usuwanie chwastów.
+        To pomoże Twoim roślinom rosnąć zdrowo i pięknie. \n\nPrzygotowanie odpowiednich warunków dla roślin na początku procesu sadzenia to kluczowy krok,
+        który zapewni bujne i kolorowe uprawy w Twoim ogrodzie</string>
+
+    <string name="nauka_tekst2">\t\tDobrze zaplanowane rozmieszczenie roślin wymaga dokładnego sporządzenia schematu nasadzeń oraz przemyślanego zaaranżowania otoczenia domu.
+        Kwiatowe grządki z reguły umieszcza się po stronie przodu posesji, choć nie jest to jedyny możliwy punkt do posadzenia roślin.
+        \n\tBardzo efektownie prezentują się również kwietne obszary za budynkiem czy pnące się róże przy kratach obok bocznych ścian domu lub altan.
+        W projektowaniu ogrodu warto rozważyć podział na różne sekcje.
+        Ważne przy wyborze i sadzeniu kwiatów jest to, jakie mają wymagania dotyczące ilości wody i nasłonecznienia, jak się rozwijają pod względem wielkości i szerokości,
+        jakie posiadają barwy czy terminy kwitnienia.
+        \n\tNiektóre gatunki nie lubią towarzystwa innych roślin, co także trzeba uwzględnić.
+        Duże rośliny nie powinny rzucać cienia na mniejsze. Jeśli posiadają rozbudowany system korzeniowy, mogą wchłaniać składniki pokarmowe ziemii, co wpłynie na ich sąsiadów.
+        Podobnie jest z wodą. Rozsądnie jest ustawić najwyższe rośliny z tyłu, a niższe z przodu, aby uniknąć ich zacieniania się nawzajem. meblobranie</string>
+
+
 
     <!-- Strings related to login -->
 

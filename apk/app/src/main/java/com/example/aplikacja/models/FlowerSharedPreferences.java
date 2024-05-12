@@ -3,24 +3,24 @@ package com.example.aplikacja.models;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.preference.PreferenceManager;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class FlowerSharedPreferences {
     private static final String PREF_NAME = "selected_flowers";
     private static final String KEY_FLOWERS = "flowers";
 
+    public static final String KEY_NOTES = "notes";
+
     private SharedPreferences preferences;
     private Gson gson;
+
+    boolean isDuplicated;
 
     public FlowerSharedPreferences(Context context) {
         preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -29,6 +29,22 @@ public class FlowerSharedPreferences {
     public void clearFlowerSharedPreferences(){
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear().apply();
+    }
+    public void removeNotesForFlower(int pos) {
+        Flower flower = getFlowers().get(pos);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(flower.getName() + "_notes");
+        editor.apply();
+    }
+
+    public void addNotesToFlower(Flower flower, String text){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(flower.getName() + "_notes", text);
+        editor.apply();
+    }
+
+    public String getNotesForFlower(Flower flower) {
+        return preferences.getString(flower.getName() + "_notes", "");
     }
 
     public void removeFlowerFromList(int pos){
@@ -40,12 +56,31 @@ public class FlowerSharedPreferences {
         saveSelectedFlowers(flowerList);
     }
     public void addSelectedFlower(Flower flower) {
-        List<Flower> selectedFlowers = getSelectedFlowers();
-        selectedFlowers.add(flower);
-        saveSelectedFlowers(selectedFlowers);
+        List<Flower> selectedFlowers = getFlowers();
+        checkDuplicated(flower);
+        if (!isDuplicated) {
+            selectedFlowers.add(flower);
+            saveSelectedFlowers(selectedFlowers);
+        }
+    }
+    public boolean checkDuplicated(Flower flower){
+        List<Flower> selectedFlowers = getFlowers();
+        for (Flower existingFlower : selectedFlowers) {
+            if (existingFlower.getName().equals(flower.getName())) {
+                isDuplicated = true;
+                return isDuplicated;
+            }
+        }
+        isDuplicated = false;
+        return isDuplicated;
     }
 
-    public List<Flower> getSelectedFlowers() {
+    public boolean getIsDuplicated(){
+        return isDuplicated;
+    }
+
+
+    public List<Flower> getFlowers() {
         String json = preferences.getString(KEY_FLOWERS, "");
         Type type = new TypeToken<List<Flower>>(){}.getType();
         List<Flower> selectedFlowers = gson.fromJson(json, type);

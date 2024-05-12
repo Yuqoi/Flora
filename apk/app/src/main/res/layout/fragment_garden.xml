@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.GardenFragment"
     android:orientation="vertical"
-    android:background="@color/bgcolor">
+    android:background="@color/bgdark">
 
 
    <LinearLayout

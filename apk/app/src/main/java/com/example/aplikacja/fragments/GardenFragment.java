@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -18,12 +17,10 @@ import android.widget.Toast;
 import com.example.aplikacja.R;
 import com.example.aplikacja.activities.FlowerActivity;
 import com.example.aplikacja.activities.MyGardenSelectedFlower;
-import com.example.aplikacja.activities.SelectedFlower;
-import com.example.aplikacja.helpers.MyGardenAdapter;
+import com.example.aplikacja.adapter.MyGardenAdapter;
 import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
 import com.example.aplikacja.models.FlowerSharedPreferences;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
@@ -52,7 +49,7 @@ public class GardenFragment extends Fragment {
 
 
         FlowerSharedPreferences prefs = new FlowerSharedPreferences(view.getContext());
-        List<Flower> gottenFlowers = prefs.getSelectedFlowers();
+        List<Flower> gottenFlowers = prefs.getFlowers();
 
         adapter = new MyGardenAdapter(view.getContext(), gottenFlowers);
 
@@ -70,6 +67,7 @@ public class GardenFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = viewHolder.getAdapterPosition();
                 FlowerSharedPreferences prefs = new FlowerSharedPreferences(view.getContext());
+                prefs.removeNotesForFlower(pos);
                 prefs.removeFlowerFromList(pos);
                 gottenFlowers.remove(pos);
                 adapter.notifyDataSetChanged();
@@ -104,7 +102,8 @@ public class GardenFragment extends Fragment {
                 FlowerSharedPreferences prefs = new FlowerSharedPreferences(view.getContext());
                 prefs.clearFlowerSharedPreferences();
                 Toast.makeText(getContext(), "Usunieto wszystkie kwiaty", Toast.LENGTH_SHORT).show();
-
+                gottenFlowers.clear();
+                adapter.notifyDataSetChanged();
             }
         });
 

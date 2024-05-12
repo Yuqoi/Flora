@@ -15,9 +15,13 @@
         android:textSize="18sp" />
 
     <EditText
+        android:id="@+id/notatki_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="24dp"
+        android:background="@null"
         android:freezesText="true"
         android:gravity="top"
-        android:hint="Wpisz tutaj..." />
+        android:hint="Wpisz tutaj..."
+        android:textColor="@color/fontcolor" />
 </LinearLayout>

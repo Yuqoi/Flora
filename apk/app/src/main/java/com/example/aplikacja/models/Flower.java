@@ -24,12 +24,14 @@ public class Flower implements Serializable {
     String susceptibilityToPests;
     String usability;
     String difficulty;
+    int whenToWater;
+
 
     public Flower(String name, String image, String desc, String bloomTime,
                   List<String> colors, String family, String nativeRegion, String scientificName,
                   String soilType, String sunRequirements, String wateringNeeds, String avgHeight,
                   String avgSpread, String toxicity, String susceptibilityToPests, String usability,
-                  String difficulty) {
+                  String difficulty, int whenToWater) {
         this.name = name;
         this.image = image;
         this.desc = desc;
@@ -47,30 +49,9 @@ public class Flower implements Serializable {
         this.susceptibilityToPests = susceptibilityToPests;
         this.usability = usability;
         this.difficulty = difficulty;
+        this.whenToWater = whenToWater;
     }
-
-    @Override
-    public String toString() {
-        return "Flower{" +
-                "name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                ", desc='" + desc + '\'' +
-                ", bloomTime='" + bloomTime + '\'' +
-                ", colors=" + colors +
-                ", family='" + family + '\'' +
-                ", nativeRegion='" + nativeRegion + '\'' +
-                ", scientificName='" + scientificName + '\'' +
-                ", soilType='" + soilType + '\'' +
-                ", sunRequirements='" + sunRequirements + '\'' +
-                ", wateringNeeds='" + wateringNeeds + '\'' +
-                ", avgHeight='" + avgHeight + '\'' +
-                ", avgSpread='" + avgSpread + '\'' +
-                ", toxicity='" + toxicity + '\'' +
-                ", susceptibilityToPests='" + susceptibilityToPests + '\'' +
-                ", usability='" + usability + '\'' +
-                ", difficulty='" + difficulty + '\'' +
-                '}';
-    }
+    public int getWhenToWater() {return whenToWater;}
 
     public String getName() {
         return name;

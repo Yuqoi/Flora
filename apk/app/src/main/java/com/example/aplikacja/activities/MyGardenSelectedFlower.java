@@ -3,25 +3,19 @@ package com.example.aplikacja.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.example.aplikacja.fragments.GardenFragment;
-import com.example.aplikacja.fragments.InformacjeFragment;
 import com.example.aplikacja.helpers.FlowerViewModel;
-import com.example.aplikacja.helpers.FragmentPageAdapter;
+import com.example.aplikacja.adapter.FragmentPageAdapter;
 import com.example.aplikacja.models.Flower;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.example.aplikacja.R;
-import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MyGardenSelectedFlower extends AppCompatActivity {
 
@@ -51,6 +45,9 @@ public class MyGardenSelectedFlower extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         Flower gottenFlower = (Flower) getIntent().getSerializableExtra("flower");
+
+
+
 
         flowerViewModel = new ViewModelProvider(this).get(FlowerViewModel.class);
         flowerViewModel.setFlower(gottenFlower);
