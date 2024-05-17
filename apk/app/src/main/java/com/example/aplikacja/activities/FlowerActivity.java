@@ -10,6 +10,11 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+
+import com.example.aplikacja.adapter.SearchHistoryAdapter;
+import com.example.aplikacja.helpers.StringSelectListener;
+import com.example.aplikacja.models.SearchItem;
+import com.example.aplikacja.sharedprefs.SearchHistoryPreferences;
 import com.google.android.material.search.SearchBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,33 +35,59 @@ import java.util.List;
 public class FlowerActivity extends AppCompatActivity {
 
     RecyclerView flowersRecyclerView;
+    RecyclerView searchHistoryRecyclerView;
     FlowerAdapter flowerAdapter;
-    ArrayList<Flower> list;
     SearchView searchView;
 
     AppCompatImageButton returnButton;
 
     DatabaseReference databaseReference;
 
+    List<SearchItem> searchList;
+    ArrayList<Flower> list;
+
+    SearchHistoryAdapter searchAdapter;
+    SearchHistoryPreferences searchHistoryPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flower);
 
+        searchHistoryRecyclerView = findViewById(R.id.flower_search_history);
         flowersRecyclerView = findViewById(R.id.flowersRecyclerView);
         searchView = findViewById(R.id.searchView);
         list = new ArrayList<>();
-
-
+        returnButton = findViewById(R.id.return_button);
+        searchList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("kwiaty");
         flowersRecyclerView.setHasFixedSize(true);
         flowersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         flowerAdapter = new FlowerAdapter(this, list);
         flowersRecyclerView.setAdapter(flowerAdapter);
 
-        returnButton = findViewById(R.id.return_button);
+        searchHistoryPreferences = new SearchHistoryPreferences(this);
+        List<String> savedHistory = searchHistoryPreferences.loadSearchHistory();
+        for (String q : savedHistory){
+            searchList.add(new SearchItem(q));
+        }
+
+
+
+
+        searchAdapter = new SearchHistoryAdapter(this, searchList);
+        searchHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        searchHistoryRecyclerView.setAdapter(searchAdapter);
+
+        searchAdapter.setSelectedListener(new StringSelectListener() {
+            @Override
+            public void setSelectedItem(SearchItem text) {
+                savedHistory.remove(text.getText());
+                searchHistoryPreferences.saveSearchHistory(savedHistory);
+                searchView.setQuery(text.getText(), false);
+            }
+        });
+
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +147,13 @@ public class FlowerActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                if (!query.isEmpty()) {
+                    searchList.add(new SearchItem(query));
+                    searchAdapter.notifyItemInserted(searchList.size() - 1);
+                    searchHistoryPreferences.addSearchQuery(query);
+                    searchView.setQuery("", false);
+                }
+                return true;
             }
 
             @Override

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aplikacja.R;
+import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -22,11 +23,18 @@ public class HomeFlowerAdapter extends RecyclerView.Adapter<HomeFlowerAdapter.Vi
     Context context;
     List<Flower> flowerList;
 
+    private SelectListener listener;
+
 
     public HomeFlowerAdapter(Context context, List<Flower> flowerList) {
         this.context = context;
         this.flowerList = flowerList;
     }
+
+    public void setSelectedListener(SelectListener listener){
+        this.listener = listener;
+    }
+
 
     @NonNull
     @Override
@@ -37,9 +45,6 @@ public class HomeFlowerAdapter extends RecyclerView.Adapter<HomeFlowerAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-
-
         holder.flowerName.setText(flowerList.get(position).getName());
 
         Glide.with(context.getApplicationContext())
@@ -47,6 +52,16 @@ public class HomeFlowerAdapter extends RecyclerView.Adapter<HomeFlowerAdapter.Vi
                 .placeholder(R.drawable.reload_icon)
                 .error(R.drawable.error_icon)
                 .into(holder.imageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClicked(flowerList.get(position));
+                }
+            }
+        });
+
     }
 
     @Override
@@ -70,5 +85,4 @@ public class HomeFlowerAdapter extends RecyclerView.Adapter<HomeFlowerAdapter.Vi
 
         }
     }
-
 }

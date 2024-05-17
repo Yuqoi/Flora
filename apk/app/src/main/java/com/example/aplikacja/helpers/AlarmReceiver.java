@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -20,41 +21,17 @@ import com.example.aplikacja.R;
 import com.example.aplikacja.activities.WaterNotification;
 import com.example.aplikacja.models.Flower;
 
-public class AlarmReceiver extends BroadcastReceiver {
-
+public class AlarmReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "YOUR_CHANNEL_ID")
+                .setSmallIcon(R.mipmap.ic_launcher) // use your app icon
+                .setContentTitle("Water Reminder")
+                .setContentText("Time to water your plant!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-        Intent notificationIntent = new Intent(context, WaterNotification.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
-
-
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_BOOT_COMPLETED)
-                == PackageManager.PERMISSION_GRANTED) {
-            // Permission is granted, proceed with showing the notification
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "alarm_channel")
-                    .setSmallIcon(R.drawable.flower_icon)
-                    .setContentTitle("kwiat")
-                    .setContentText("podlij")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(0, builder.build());
-
-
-
-            Toast.makeText(context, "dzialaxd" , Toast.LENGTH_LONG).show();
-        } else {
-
-            Toast.makeText(context, "NIE DZIALA" , Toast.LENGTH_LONG).show();
-        }
-
-
-
-
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, builder.build());
     }
 }

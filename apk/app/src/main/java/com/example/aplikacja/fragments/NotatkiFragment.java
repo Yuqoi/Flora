@@ -15,7 +15,7 @@ import android.widget.EditText;
 import com.example.aplikacja.R;
 import com.example.aplikacja.helpers.FlowerViewModel;
 import com.example.aplikacja.models.Flower;
-import com.example.aplikacja.models.FlowerSharedPreferences;
+import com.example.aplikacja.sharedprefs.FlowerSharedPreferences;
 
 
 public class NotatkiFragment extends Fragment {

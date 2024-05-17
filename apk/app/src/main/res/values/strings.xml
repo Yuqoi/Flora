@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vlora</string>
+    <string name="app_name">Flora</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Login">Login</string>
@@ -28,7 +28,8 @@
         \n\tNiektóre gatunki nie lubią towarzystwa innych roślin, co także trzeba uwzględnić.
         Duże rośliny nie powinny rzucać cienia na mniejsze. Jeśli posiadają rozbudowany system korzeniowy, mogą wchłaniać składniki pokarmowe ziemii, co wpłynie na ich sąsiadów.
         Podobnie jest z wodą. Rozsądnie jest ustawić najwyższe rośliny z tyłu, a niższe z przodu, aby uniknąć ich zacieniania się nawzajem. meblobranie</string>
-
+    <string name="dlaczego_ta_aplikacja_jest_wa_na"><u>Dlaczego ta aplikacja jest ważna?</u></string>
+    <string name="aplikacja_stworzona_przez"><u>Aplikacja stworzona przez:</u></string>
 
 
     <!-- Strings related to login -->

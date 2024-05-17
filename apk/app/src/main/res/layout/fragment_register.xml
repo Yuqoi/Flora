@@ -134,6 +134,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/custom_button"
                     android:elevation="8dp"
+                    android:textAllCaps="false"
                     android:text="@string/click_to_register" />
 
                 <TextView

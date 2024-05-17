@@ -15,7 +15,7 @@
         android:padding="5dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
@@ -25,6 +25,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
+                android:elevation="8dp"
+                android:layout_gravity="center"
                 app:shapeAppearanceOverlay="@style/RoundedSquare"
                 android:src="@drawable/pelargonia"/>
             <LinearLayout
@@ -50,12 +52,6 @@
             </LinearLayout>
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:background="@color/purplemagnolia" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

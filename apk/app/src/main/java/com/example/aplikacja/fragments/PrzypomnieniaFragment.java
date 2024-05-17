@@ -3,6 +3,11 @@ package com.example.aplikacja.fragments;
 
 
 
+import static android.content.Context.ALARM_SERVICE;
+
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
@@ -38,11 +43,17 @@ import com.example.aplikacja.helpers.AlarmReceiver;
 import com.example.aplikacja.helpers.FlowerViewModel;
 import com.example.aplikacja.models.Flower;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 
 public class PrzypomnieniaFragment extends Fragment {
@@ -62,13 +73,6 @@ public class PrzypomnieniaFragment extends Fragment {
     TextView oszacowanyCzas;
 
     AppCompatButton przyciskPowiadom;
-
-
-
-
-    Calendar calendar;
-    AlarmManager alarmManager;
-    PendingIntent pendingIntent;
 
     AppCompatButton usunAlarm;
 
@@ -112,58 +116,23 @@ public class PrzypomnieniaFragment extends Fragment {
         przyciskPowiadom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!checkIfNull(data, godzina)){
+                if(!checkIfNull(data, godzina)) {
                     int howManyDays = flower.getWhenToWater();
-                    System.out.println("dziala");
 
-                    String[] date = data.getText().toString().split("/");
-                    String[] czas = godzina.getText().toString().split(":");
-
-
-
-
-                    calendar = Calendar.getInstance();
-                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(czas[0]));
-                    calendar.set(Calendar.MINUTE, Integer.parseInt(czas[1]));
-                    calendar.set(Calendar.SECOND, 0);
-                    calendar.set(Calendar.MILLISECOND, 0);
-
-
-
-
-
-
-                    Toast.makeText(view.getContext(), "Pomyslnie ustawiono alarn", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(view.getContext(), "Uzupełnij pola", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "dziala", Toast.LENGTH_SHORT).show();
                 }
-
-                // if the date + how manyn days to water is smaller then it should
             }
         });
 
         usunAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelAlarm(view);
+
             }
         });
 
 
         return view;
-    }
-
-    private void cancelAlarm(View view) {
-        Intent intent = new Intent(view.getContext(), AlarmReceiver.class);
-
-        pendingIntent = PendingIntent.getBroadcast(view.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE );
-
-        if (alarmManager == null){
-            alarmManager = (AlarmManager) view.getContext().getSystemService(Context.ALARM_SERVICE);
-
-        }
-        alarmManager.cancel(pendingIntent);
-        Toast.makeText(view.getContext(), "usunieto alarm", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -191,7 +160,6 @@ public class PrzypomnieniaFragment extends Fragment {
             }
         }, currentTime.get(0), currentTime.get(1), true);
         timePicker.show();
-
     }
 
     private boolean checkIfNull(TextView v1, TextView v2){
@@ -222,7 +190,4 @@ public class PrzypomnieniaFragment extends Fragment {
                 LocalTime.now().getMinute()
         );
     }
-
-
-
 }

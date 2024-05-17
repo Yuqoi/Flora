@@ -5,95 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.IntroActivity"
-    android:background="@color/leafgreen">
+    android:background="@color/bgdark">
 
-    <!-- Top View -->
-    <RelativeLayout
-        android:id="@+id/topView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:background="@color/leafgreen"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/middleView"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageView
+        android:id="@+id/intro_image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center">
-
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:src="@drawable/frame_2" />
-    </RelativeLayout>
-
-
-    <!-- Middle View -->
-    <View
-        android:id="@+id/middleView"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:background="@drawable/wave_bg"
-        app:layout_constraintTop_toBottomOf="@+id/topView"
-        app:layout_constraintBottom_toTopOf="@+id/bottomView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/image_4" />
 
-    <!-- Bottom View -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#f0ffff"
+
+    <TextView
+        android:id="@+id/intro_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="Flora"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro_image" />
+
+    <TextView
+        android:id="@+id/intro_text_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Odkryj swój ogród"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro_title" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/appCompatButton"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/arrow_right"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/middleView">
+        app:layout_constraintStart_toStartOf="parent" />
 
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Witaj w wirtualnym ogrodzie!"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="26sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="234dp"
-            android:layout_height="104dp"
-            android:layout_marginTop="55dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
-            style="@android:style/Widget.Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:onClick="onContinueClick"
-            android:text="Zacznij"
-            android:textColor="@color/white"
-            android:textSize="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

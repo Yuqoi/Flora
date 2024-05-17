@@ -41,8 +41,6 @@ public class LoginFragment extends Fragment {
 
 
     FirebaseAuth mAuth;
-
-
     ProgressBar progressBar;
     TextView textView;
 

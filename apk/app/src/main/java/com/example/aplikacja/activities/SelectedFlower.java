@@ -13,11 +13,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.aplikacja.R;
 import com.example.aplikacja.models.Flower;
-import com.example.aplikacja.models.FlowerSharedPreferences;
+import com.example.aplikacja.sharedprefs.FlowerSharedPreferences;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.Iterator;
-import java.util.List;
 
 public class SelectedFlower extends AppCompatActivity {
 

@@ -7,18 +7,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aplikacja.R;
-import com.example.aplikacja.fragments.CameraFragment;
 import com.example.aplikacja.fragments.GardenFragment;
 import com.example.aplikacja.fragments.HomeFragment;
-import com.example.aplikacja.fragments.LoginFragment;
 import com.example.aplikacja.fragments.UserFragment;
 import com.example.aplikacja.helpers.FragmentHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements FragmentHelper {
                 } else if (itemId == R.id.navGarden) {
                     changeFragment(new GardenFragment(), false);
                 } else if (itemId == R.id.navCamera) {
-                    changeFragment(new CameraFragment(), false);
+                    changeIntent(new CameraActivity());
                 } else{ // profile fragment
                     changeFragment(new UserFragment(), false);
                 }
@@ -81,7 +78,11 @@ public class MainActivity extends AppCompatActivity implements FragmentHelper {
     }
 
 
-
+    private void changeIntent(Object i){
+        Intent intent = new Intent(getApplicationContext(), i.getClass());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     @Override
     public void changeFragment(Fragment fragment, boolean isInitialized) {

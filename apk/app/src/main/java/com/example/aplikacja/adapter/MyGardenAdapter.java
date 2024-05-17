@@ -15,6 +15,7 @@ import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyGardenAdapter extends RecyclerView.Adapter<MyGardenAdapter.MyGardenViewHolder> {
@@ -38,6 +39,11 @@ public class MyGardenAdapter extends RecyclerView.Adapter<MyGardenAdapter.MyGard
     @Override
     public MyGardenViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new MyGardenViewHolder(LayoutInflater.from(context).inflate(R.layout.mygarden_item,parent,false));
+    }
+
+    public void filterList(List<Flower> filteredList){
+        flowerList = (ArrayList<Flower>) filteredList;
+        notifyDataSetChanged();
     }
 
     @Override

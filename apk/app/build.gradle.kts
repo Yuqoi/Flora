@@ -1,5 +1,3 @@
-import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
-
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
@@ -16,7 +14,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.informacje_background.png.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -31,6 +29,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        mlModelBinding = true
     }
 }
 
@@ -42,6 +41,9 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+    androidTestImplementation("junit:junit:4.13.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
@@ -59,7 +61,8 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:21.0.0")
     implementation("com.squareup.picasso:picasso:2.8")
     testImplementation("junit:junit:4.13.2")
+    implementation("com.google.firebase:firebase-appcheck:18.0.0")
+    implementation("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
 }
