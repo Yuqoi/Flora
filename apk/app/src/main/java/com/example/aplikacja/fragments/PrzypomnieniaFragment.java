@@ -8,6 +8,7 @@ import static android.content.Context.ALARM_SERVICE;
 import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
@@ -21,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -76,6 +78,7 @@ public class PrzypomnieniaFragment extends Fragment {
 
     AppCompatButton usunAlarm;
 
+    private static final int REQUEST_CODE_NOTIFICATION = 101;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -118,8 +121,12 @@ public class PrzypomnieniaFragment extends Fragment {
             public void onClick(View v) {
                 if(!checkIfNull(data, godzina)) {
                     int howManyDays = flower.getWhenToWater();
-
-                    Toast.makeText(getContext(), "dziala", Toast.LENGTH_SHORT).show();
+                    if (checkNotificationPermission(view)) {
+                        setWateringReminder(view.getContext(), 20, 27);
+                        Toast.makeText(v.getContext(), "Reminder set for 7 days at 8:00 AM", Toast.LENGTH_SHORT).show();
+                    } else {
+                        requestNotificationPermission(view);
+                    }
                 }
             }
         });
@@ -135,7 +142,53 @@ public class PrzypomnieniaFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_NOTIFICATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                setWateringReminder(requireContext(), 20, 27);
+                Toast.makeText(requireContext(), "Reminder set for 7 days at 8:00 AM", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Notification permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
+    private boolean checkNotificationPermission(View view) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
+        }
+        return true;
+    }
+
+    private void requestNotificationPermission(View view) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATION);
+        }
+    }
+
+    public void setWateringReminder(Context context, int hourOfDay, int minute) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, LocalDate.now().getDayOfYear()); // Set the reminder 7 days from now
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        try {
+            if (alarmManager != null) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Permission to set exact alarms denied", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     private void openDateDialog(View view){

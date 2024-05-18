@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rozpoznaj warunki swojego ogrodu"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:fontFamily="sans-serif-black"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/nauka_tekst1"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:maxEms="15"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
@@ -110,6 +110,17 @@
                     android:fontFamily="sans-serif-black"
                     android:textAlignment="textStart"
                     />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/nauka_ogrod"
+                    app:shapeAppearanceOverlay="@style/RoundedSquare"/>
 
                 <TextView
                     android:layout_width="match_parent"
