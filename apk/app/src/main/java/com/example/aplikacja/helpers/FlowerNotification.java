@@ -1,11 +1,15 @@
 package com.example.aplikacja.helpers;
 
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -15,17 +19,21 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.aplikacja.R;
-import com.example.aplikacja.activities.WaterNotification;
 import com.example.aplikacja.models.Flower;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FlowerNotification extends Worker {
 
 
-    private static String CHANNEL_ID = "";
+    private static String CHANNEL_ID = "flower_channel";
+    private static final String PREFERENCES_FILE = "com.example.notifications.preferences";
+    private static final String NOTIFICATION_DATA_KEY_PREFIX = "notification_data_";
+    private static final AtomicInteger notificationCounter = new AtomicInteger(0);
 
     public FlowerNotification(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
@@ -47,13 +55,13 @@ public class FlowerNotification extends Worker {
             e.printStackTrace();
         }
 
-        CHANNEL_ID = flower.getName() + "_channel";
-
 
         createNotificationChannel(flower);
         displayNotification(flower);
         return Result.success();
     }
+
+
 
     private void createNotificationChannel(Flower flower) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -62,28 +70,24 @@ public class FlowerNotification extends Worker {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
+
             NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
 
     private void displayNotification(Flower flower) {
-        Intent intent = new Intent(getApplicationContext(), WaterNotification.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("flowerclass", flower);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        int notificationId = notificationCounter.incrementAndGet();
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo_flora) // Replace with your own icon
-                .setContentTitle("Podlej Kwiatka!")
-                .setContentText(flower.getName() + " musi zostać podlany")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setSmallIcon(R.drawable.logo_flora)
+                .setContentTitle("Czas podlać kwiata!")
+                .setContentText(flower.getName() + ", oczekuje na nawodnienie")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-        notificationManager.notify(1, builder.build());
+        notificationManager.notify(notificationId, builder.build());
     }
 
 

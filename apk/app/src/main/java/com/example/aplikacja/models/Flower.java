@@ -1,10 +1,11 @@
 package com.example.aplikacja.models;
 
-import android.net.Uri;
-
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Flower implements Serializable {
     String name;
@@ -51,6 +52,7 @@ public class Flower implements Serializable {
         this.difficulty = difficulty;
         this.whenToWater = whenToWater;
     }
+
     public int getWhenToWater() {return whenToWater;}
 
     public String getName() {

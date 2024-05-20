@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class PrzypomnieniaFragment extends Fragment {
@@ -76,8 +78,10 @@ public class PrzypomnieniaFragment extends Fragment {
 
     private static final String CHANNEL_ID = "flower_channel";
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 1;
-    private static final int SCHEDULE_EXACT_ALARM_REQUEST_CODE = 2;
-    private int selectedHour, selectedMinute;
+    private static final String PREFERENCES_FILE = "com.example.notifications.preferences";
+    private static final String NOTIFICATION_ID_KEY = "notification_id_key";
+    private static AtomicInteger notificationCounter;
+
 
 
     @Override
@@ -99,6 +103,10 @@ public class PrzypomnieniaFragment extends Fragment {
         usunAlarm = view.findViewById(R.id.usun_alarm);
 
         nazwaKwiata.setText(flower.getName());
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        int notificationId = sharedPreferences.getInt(NOTIFICATION_ID_KEY, 0);
+        notificationCounter = new AtomicInteger(notificationId);
 
         ostatniaData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +135,7 @@ public class PrzypomnieniaFragment extends Fragment {
                             Toast.makeText(getContext(), "Włącz powiadomienia", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    scheduleNotification(Integer.parseInt(timeParts[0]), Integer.parseInt(timeParts[1]));
+                    scheduleNotification(Integer.parseInt(timeParts[0]), Integer.parseInt(timeParts[1]), flower);
                     Toast.makeText(getContext(), "Pomyślnie ustawiono powiadomienie", Toast.LENGTH_SHORT).show();
                 }
 
@@ -139,22 +147,20 @@ public class PrzypomnieniaFragment extends Fragment {
     }
 
 
-    private void scheduleNotification(int hourOfDay, int minute) {
+    private void scheduleNotification(int hourOfDay, int minute, Flower flower) {
         // Set the time for the notification
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
-        // Calculate delay in milliseconds
         long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
         if (delay < 0) {
-            // If the selected time is before the current time, schedule it for the next day
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             delay = calendar.getTimeInMillis() - System.currentTimeMillis();
         }
 
-        Flower flower = flowerViewModel.getFlower();
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
             objectOutputStream.writeObject(flower);
@@ -167,14 +173,17 @@ public class PrzypomnieniaFragment extends Fragment {
                 .putByteArray("flowerclass", byteArray)
                 .build();
 
-        // Create the WorkRequest
         WorkRequest notificationWork = new OneTimeWorkRequest.Builder(FlowerNotification.class)
                 .setInitialDelay(delay, TimeUnit.MILLISECONDS)
                 .setInputData(data)
                 .build();
 
-        // Enqueue the WorkRequest
         WorkManager.getInstance(requireContext()).enqueue(notificationWork);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(NOTIFICATION_ID_KEY, notificationCounter.get());
+        editor.apply();
     }
 
     private void openDateDialog(View view){
@@ -194,7 +203,7 @@ public class PrzypomnieniaFragment extends Fragment {
         TimePickerDialog timePicker = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                godzina.setText(String.format("%d:%d", hourOfDay, minute));
+                godzina.setText(String.format("%02d:%02d", hourOfDay, minute));
                 updateOszacowanyCzas();
             }
         }, currentTime.get(0), currentTime.get(1), true);
