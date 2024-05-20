@@ -23,7 +23,13 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import android.os.Parcel;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +40,19 @@ import android.widget.Toast;
 
 
 import com.example.aplikacja.R;
+import com.example.aplikacja.helpers.FlowerNotification;
 import com.example.aplikacja.helpers.FlowerViewModel;
 import com.example.aplikacja.models.Flower;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class PrzypomnieniaFragment extends Fragment {
@@ -65,6 +76,9 @@ public class PrzypomnieniaFragment extends Fragment {
 
     private static final String CHANNEL_ID = "flower_channel";
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int SCHEDULE_EXACT_ALARM_REQUEST_CODE = 2;
+    private int selectedHour, selectedMinute;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,31 +117,19 @@ public class PrzypomnieniaFragment extends Fragment {
         przyciskPowiadom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkIfNull(data, godzina)) {
-                    int howManyDays = flower.getWhenToWater();
-                    createNotificationChannel();
-                    // Check and request notification permission for Android 13 and above
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        if (ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.POST_NOTIFICATIONS)
-                                != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(requireActivity(),
-                                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
-                                    NOTIFICATION_PERMISSION_REQUEST_CODE);
-                        } else {
-                            // Permission already granted, display notification
-                            displayNotification();
-                        }
-                    } else {
-                        // For Android versions below 13, display notification directly
-                        displayNotification();
-                    }
-                }
-            }
-        });
+                String[] timeParts = godzina.getText().toString().split(":");
+                String[] dataParts = godzina.getText().toString().split("/");
 
-        usunAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(requireActivity(),
+                            new String[]{android.Manifest.permission.POST_NOTIFICATIONS},NOTIFICATION_PERMISSION_REQUEST_CODE);
+                            Toast.makeText(getContext(), "Włącz powiadomienia", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    scheduleNotification(Integer.parseInt(timeParts[0]), Integer.parseInt(timeParts[1]));
+                    Toast.makeText(getContext(), "Pomyślnie ustawiono powiadomienie", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -137,31 +139,42 @@ public class PrzypomnieniaFragment extends Fragment {
     }
 
 
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "flowerchannel";
-            String description = "Channel for example notifications";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
+    private void scheduleNotification(int hourOfDay, int minute) {
+        // Set the time for the notification
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
 
-            // Register the channel with the system
-            NotificationManager notificationManager = requireActivity().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+        // Calculate delay in milliseconds
+        long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
+        if (delay < 0) {
+            // If the selected time is before the current time, schedule it for the next day
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            delay = calendar.getTimeInMillis() - System.currentTimeMillis();
         }
-    }
 
-    private void displayNotification() {
-        // Build the notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo_flora) // Replace with your own icon
-                .setContentTitle("Hello, World!")
-                .setContentText("This is a simple notification example.")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        Flower flower = flowerViewModel.getFlower();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
+            objectOutputStream.writeObject(flower);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
 
-        // Show the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
-        notificationManager.notify(1, builder.build());
+        Data data = new Data.Builder()
+                .putByteArray("flowerclass", byteArray)
+                .build();
+
+        // Create the WorkRequest
+        WorkRequest notificationWork = new OneTimeWorkRequest.Builder(FlowerNotification.class)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(data)
+                .build();
+
+        // Enqueue the WorkRequest
+        WorkManager.getInstance(requireContext()).enqueue(notificationWork);
     }
 
     private void openDateDialog(View view){

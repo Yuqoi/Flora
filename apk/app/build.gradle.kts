@@ -40,6 +40,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.work:work-runtime:2.9.0")
+    implementation("com.google.guava:guava:32.0.1-android")
+
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
     implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")

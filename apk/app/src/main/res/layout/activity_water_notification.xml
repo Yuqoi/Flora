@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/return_button"
+            android:id="@+id/notification_return_button"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginStart="24dp"
@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.25">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/selected_flower_image"
+            android:id="@+id/notification_flower_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:adjustViewBounds="true"
@@ -47,6 +47,7 @@
             tools:src="@drawable/pelargonia" />
 
         <TextView
+            android:id="@+id/notification_flower_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
