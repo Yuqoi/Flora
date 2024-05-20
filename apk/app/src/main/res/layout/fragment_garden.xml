@@ -52,6 +52,14 @@
         android:text="Mój Ogródek"
         android:textAlignment="center"/>
 
+    <TextView
+        android:id="@+id/garden_howmanyplants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="12dp"
+        tools:text="0/100" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mygarden_recyclerview"
         android:layout_width="match_parent"

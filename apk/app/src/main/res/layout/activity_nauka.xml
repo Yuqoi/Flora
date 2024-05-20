@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/return_button"
+            android:id="@+id/nauka_return_button"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginStart="24dp"
@@ -88,7 +88,36 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:textAlignment="textStart"/>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nauka_tekst1_2"
+                android:textSize="16sp"
+                android:maxEms="15"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nauka_tekst1_3"
+                android:textSize="16sp"
+                android:maxEms="15"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nauka_tekst1_4"
+                android:textSize="16sp"
+                android:maxEms="15"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="center"/>
 
             <View
                 android:layout_width="match_parent"
@@ -104,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dokonaj analizy miejsca"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:fontFamily="sans-serif-black"
@@ -126,16 +155,91 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/nauka_tekst2"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:maxEms="15"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textAlignment="textStart"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nauka_tekst2_1"
+                    android:textSize="16sp"
+                    android:maxEms="15"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textAlignment="center"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/nauka_wave2" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Przygotowanie do sadzenia"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-black"
+                android:textAlignment="textStart"
+                />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitCenter"
+                android:elevation="8dp"
+                android:src="@drawable/nauka_sadzenie"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nauka_tekst3_1"
+                android:textSize="16sp"
+                android:maxEms="15"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nauka_tekst3_2"
+                android:textSize="16sp"
+                android:maxEms="15"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="center"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zasady"
+                android:textSize="22sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif-black"
+                android:textAlignment="textStart"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nauka_tekst4_1"
+                android:textSize="16sp"
+                android:maxEms="15"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="center"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/nauka_magnolia"/>
 
         </LinearLayout>
     </ScrollView>

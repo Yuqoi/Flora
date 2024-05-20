@@ -1,5 +1,7 @@
 package com.example.aplikacja.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,11 +14,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aplikacja.R;
@@ -27,16 +31,22 @@ import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
 import com.example.aplikacja.sharedprefs.FlowerSharedPreferences;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class GardenFragment extends Fragment {
 
 
     SearchView searchView;
-
+    TextView howManyPlants;
     ShapeableImageView removeIcon;
     ShapeableImageView addFlowerBtn;
 
@@ -44,6 +54,10 @@ public class GardenFragment extends Fragment {
     MyGardenAdapter adapter;
 
     List<Flower> gottenFlowers;
+
+    DatabaseReference db;
+    long howMuchFlowersDB = 0;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +69,7 @@ public class GardenFragment extends Fragment {
         myGardenRecyclerView = view.findViewById(R.id.mygarden_recyclerview);
         addFlowerBtn = view.findViewById(R.id.mygarden_addflower_btn);
         searchView = view.findViewById(R.id.garden_find_flower);
+        howManyPlants = view.findViewById(R.id.garden_howmanyplants);
 
         FlowerSharedPreferences prefs = new FlowerSharedPreferences(view.getContext());
         gottenFlowers = prefs.getFlowers();
@@ -64,6 +79,20 @@ public class GardenFragment extends Fragment {
         myGardenRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         myGardenRecyclerView.setAdapter(adapter);
 
+        db = FirebaseDatabase.getInstance().getReference("kwiaty");
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                howMuchFlowersDB = snapshot.getChildrenCount();
+                setHowManyPlants(prefs.getFlowers().size(), (int) howMuchFlowersDB);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                howMuchFlowersDB = 0;
+            }
+        });
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0 , ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
             @Override
@@ -78,7 +107,9 @@ public class GardenFragment extends Fragment {
                 prefs.removeNotesForFlower(pos);
                 prefs.removeFlowerFromList(pos);
                 gottenFlowers.remove(pos);
+                setHowManyPlants(prefs.getFlowers().size(), (int) howMuchFlowersDB);
                 adapter.notifyDataSetChanged();
+
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -135,8 +166,8 @@ public class GardenFragment extends Fragment {
                     prefs.clearFlowerSharedPreferences();
                     Toast.makeText(getContext(), "Usunieto wszystkie kwiaty", Toast.LENGTH_SHORT).show();
                     gottenFlowers.clear();
+                    setHowManyPlants(prefs.getFlowers().size(), (int) howMuchFlowersDB);
                     adapter.notifyDataSetChanged();
-
                     dialog.cancel();
                 });
 
@@ -149,6 +180,10 @@ public class GardenFragment extends Fragment {
         return view;
     }
 
+    private void setHowManyPlants(int howMuch, int size){
+        howManyPlants.setText(String.format("%d/%d", howMuch, size));
+    }
+
     private void filter(String newText) {
         List<Flower> filteredList = new ArrayList<>();
         for (Flower item : gottenFlowers){
@@ -158,5 +193,6 @@ public class GardenFragment extends Fragment {
         }
         adapter.filterList(filteredList);
     }
+
 
 }

@@ -1,17 +1,9 @@
 package com.example.aplikacja.fragments;
 
 
-
-
-import static android.content.Context.ALARM_SERVICE;
-
-import static androidx.core.content.ContextCompat.checkSelfPermission;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -40,26 +34,17 @@ import android.widget.Toast;
 
 
 import com.example.aplikacja.R;
-import com.example.aplikacja.activities.WaterNotification;
-import com.example.aplikacja.helpers.AlarmReceiver;
 import com.example.aplikacja.helpers.FlowerViewModel;
 import com.example.aplikacja.models.Flower;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 
 public class PrzypomnieniaFragment extends Fragment {
-
 
 
     FlowerViewModel flowerViewModel;
@@ -78,7 +63,8 @@ public class PrzypomnieniaFragment extends Fragment {
 
     AppCompatButton usunAlarm;
 
-    private static final int REQUEST_CODE_NOTIFICATION = 101;
+    private static final String CHANNEL_ID = "flower_channel";
+    private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,8 +73,6 @@ public class PrzypomnieniaFragment extends Fragment {
 
         flowerViewModel = new ViewModelProvider(requireActivity()).get(FlowerViewModel.class);
         Flower flower = flowerViewModel.getFlower();
-
-
 
 
         nazwaKwiata = view.findViewById(R.id.przypomnienia_name);
@@ -119,13 +103,23 @@ public class PrzypomnieniaFragment extends Fragment {
         przyciskPowiadom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!checkIfNull(data, godzina)) {
+                if (!checkIfNull(data, godzina)) {
                     int howManyDays = flower.getWhenToWater();
-                    if (checkNotificationPermission(view)) {
-                        setWateringReminder(view.getContext(), 20, 27);
-                        Toast.makeText(v.getContext(), "Reminder set for 7 days at 8:00 AM", Toast.LENGTH_SHORT).show();
+                    createNotificationChannel();
+                    // Check and request notification permission for Android 13 and above
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        if (ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(requireActivity(),
+                                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                                    NOTIFICATION_PERMISSION_REQUEST_CODE);
+                        } else {
+                            // Permission already granted, display notification
+                            displayNotification();
+                        }
                     } else {
-                        requestNotificationPermission(view);
+                        // For Android versions below 13, display notification directly
+                        displayNotification();
                     }
                 }
             }
@@ -142,54 +136,33 @@ public class PrzypomnieniaFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_NOTIFICATION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                setWateringReminder(requireContext(), 20, 27);
-                Toast.makeText(requireContext(), "Reminder set for 7 days at 8:00 AM", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(requireContext(), "Notification permission denied", Toast.LENGTH_SHORT).show();
-            }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "flowerchannel";
+            String description = "Channel for example notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // Register the channel with the system
+            NotificationManager notificationManager = requireActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
-    private boolean checkNotificationPermission(View view) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            return ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
-        }
-        return true;
+    private void displayNotification() {
+        // Build the notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_flora) // Replace with your own icon
+                .setContentTitle("Hello, World!")
+                .setContentText("This is a simple notification example.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // Show the notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
+        notificationManager.notify(1, builder.build());
     }
-
-    private void requestNotificationPermission(View view) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATION);
-        }
-    }
-
-    public void setWateringReminder(Context context, int hourOfDay, int minute) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, LocalDate.now().getDayOfYear()); // Set the reminder 7 days from now
-        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        try {
-            if (alarmManager != null) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Permission to set exact alarms denied", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     private void openDateDialog(View view){
         List<Integer> currentDate = getCurrentDate();

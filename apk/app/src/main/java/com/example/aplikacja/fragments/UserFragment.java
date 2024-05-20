@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.aplikacja.R;
 import com.example.aplikacja.activities.InformacjeAplikacjaActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.AuthCredential;
@@ -146,7 +147,18 @@ public class UserFragment extends Fragment {
                 });
 
                 builder.setPositiveButton("Tak", (DialogInterface.OnClickListener) (dialog, which) -> {
-
+                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getContext(), "Pomyślnie usunięto konto", Toast.LENGTH_SHORT).show();
+                            getParentFragmentManager().popBackStack();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Nie udało się usunąć konta", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     dialog.cancel();
                 });
 
