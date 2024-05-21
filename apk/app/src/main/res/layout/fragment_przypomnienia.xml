@@ -155,31 +155,45 @@
             tools:text="Nawodnienie w dniu: 10 Maj 2024, 18:00" />
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/przypomnienia_przycisk"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/przypomnienia_background"
-        android:text="Powiadom mnie!"
-        android:textAllCaps="false"
-        android:textColor="@color/purplemagnolia"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/usun_alarm"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/przypomnienia_background"
-        android:text="usun alarm"
-        android:textAllCaps="false"
-        android:textColor="@color/purplemagnolia"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/przypomnienia_przycisk" />" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/przypomnienia_przycisk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/przypomnienia_background"
+            android:text="Powiadom mnie!"
+            android:textAllCaps="false"
+            android:textColor="@color/purplemagnolia"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/usun_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/przypomnienia_background"
+            android:text="usun alarm"
+            android:textAllCaps="false"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/purplemagnolia"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/przypomnienia_przycisk" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -100,14 +100,14 @@ public class RegisterFragment extends Fragment {
                 username = String.valueOf(editUsernameText.getText());
 
                 if (TextUtils.isEmpty(emailText)){
-                    Toast.makeText(view.getContext(), "Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Wprowadź email", Toast.LENGTH_SHORT).show();
                     return ;
                 }
                 if (TextUtils.isEmpty(passwordText)){
-                    Toast.makeText(view.getContext(), "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Wprowadź Hasło", Toast.LENGTH_SHORT).show();
                     return ;
                 }
-                if (TextUtils.isEmpty(username) || username.length() > 20){
+                if ((TextUtils.isEmpty(username) || username.length() > 20)){
                     Toast.makeText(view.getContext(), "Username too long or wrong", Toast.LENGTH_SHORT).show();
                     return;
                 }

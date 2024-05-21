@@ -39,7 +39,7 @@ public class CameraActivity extends AppCompatActivity {
     CardView cardVievForImage;
     ImageView imageView;
 
-    private static final float CONFIDENCE_THRESHOLD = 0.8f; // Adjust this value as needed
+    private static final float CONFIDENCE_THRESHOLD = 0.8f;
 
     int imageSize = 224;
     @Override
@@ -149,7 +149,6 @@ public class CameraActivity extends AppCompatActivity {
                 }
             }
 
-            // Check if confidence is below a certain threshold to consider it as an error
             if (maxConfidence < CONFIDENCE_THRESHOLD) {
                 displayRecognitionError();
             } else {

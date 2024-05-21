@@ -65,7 +65,7 @@ public class FlowerNotification extends Worker {
 
     private void createNotificationChannel(Flower flower) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = flower.getName()+"_name" ;
+            CharSequence name = "flower_channel" ;
             String description = "Notyfikacje";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);

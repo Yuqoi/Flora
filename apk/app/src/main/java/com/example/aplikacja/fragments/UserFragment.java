@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -22,6 +23,7 @@ import com.example.aplikacja.R;
 import com.example.aplikacja.activities.InformacjeAplikacjaActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.AuthCredential;
@@ -53,12 +55,11 @@ public class UserFragment extends Fragment {
     EditText changePassword1;
     EditText changePassword2;
 
-    ShapeableImageView image;
-
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     FirebaseUser user;
     String userID;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +73,6 @@ public class UserFragment extends Fragment {
         changeUsername = view.findViewById(R.id.profile_change_username);
         changePassword1 = view.findViewById(R.id.profile_change_password1);
         changePassword2 = view.findViewById(R.id.profile_change_password2);
-        image = view.findViewById(R.id.profile_zdjecie);
         aboutApplication = view.findViewById(R.id.profile_aplication_information);
         oldPassword = view.findViewById(R.id.profile_old_password);
         usunKonto = view.findViewById(R.id.user_usun_konto);
@@ -80,7 +80,6 @@ public class UserFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         fStore = FirebaseFirestore.getInstance();
-
 
 
         if (user == null){
@@ -117,11 +116,6 @@ public class UserFragment extends Fragment {
             }
         });
 
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
 
         zapisz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +123,15 @@ public class UserFragment extends Fragment {
                 if (!changePassword1.getText().toString().isEmpty() && !changePassword2.getText().toString().isEmpty()){
                     changePassword(user, user.getEmail(), oldPassword.getText().toString());
                 }
-
+                if(changeUsername.getText().toString().length() <= 20 && !username.getText().toString().isEmpty()){
+                    DocumentReference documentReference = fStore.collection("users").document(userID);
+                    documentReference.update("username", changeUsername.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getContext(), "zmieniono nazwe", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 

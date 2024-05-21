@@ -35,6 +35,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -49,10 +50,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -76,11 +81,15 @@ public class PrzypomnieniaFragment extends Fragment {
 
     AppCompatButton usunAlarm;
 
+    LinearLayout topLinearLayout;
+
+
     private static final String CHANNEL_ID = "flower_channel";
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 1;
+    private static final String WORK_REQUEST_ID_KEY = "work_request_id_key";
     private static final String PREFERENCES_FILE = "com.example.notifications.preferences";
-    private static final String NOTIFICATION_ID_KEY = "notification_id_key";
-    private static AtomicInteger notificationCounter;
+
+    private SharedPreferences sharedPreferences;
 
 
 
@@ -92,7 +101,10 @@ public class PrzypomnieniaFragment extends Fragment {
         flowerViewModel = new ViewModelProvider(requireActivity()).get(FlowerViewModel.class);
         Flower flower = flowerViewModel.getFlower();
 
+        sharedPreferences = requireActivity().getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
 
+
+        topLinearLayout = view.findViewById(R.id.linearLayout3);
         nazwaKwiata = view.findViewById(R.id.przypomnienia_name);
         ostatniaData = view.findViewById(R.id.przypomnienia_data);
         data = view.findViewById(R.id.przypomnienia_ostatnia_data);
@@ -104,61 +116,89 @@ public class PrzypomnieniaFragment extends Fragment {
 
         nazwaKwiata.setText(flower.getName());
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        int notificationId = sharedPreferences.getInt(NOTIFICATION_ID_KEY, 0);
-        notificationCounter = new AtomicInteger(notificationId);
+
 
         ostatniaData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDateDialog(view);
+                openDateDialog(view, flower);
             }
         });
 
         godzinaUstaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTimeDialog(view);
+                openTimeDialog(view, flower);
             }
         });
 
         przyciskPowiadom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] timeParts = godzina.getText().toString().split(":");
-                String[] dataParts = godzina.getText().toString().split("/");
+                if (!checkIfNull(data, godzina)){
+                    String[] timeParts = godzina.getText().toString().split(":");
+                    String[] dataParts = data.getText().toString().split("/");
 
-                if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(requireActivity(),
-                            new String[]{android.Manifest.permission.POST_NOTIFICATIONS},NOTIFICATION_PERMISSION_REQUEST_CODE);
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(Calendar.YEAR, Integer.parseInt(dataParts[2]));
+                    selectedDate.set(Calendar.MONTH, Integer.parseInt(dataParts[1]) -1);
+                    selectedDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataParts[0]));
+                    selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+                    selectedDate.set(Calendar.MINUTE, 0);
+
+                    selectedDate.add(Calendar.DAY_OF_MONTH, flower.getWhenToWater());
+
+                    Calendar currentDate = Calendar.getInstance();
+
+                    if (selectedDate.before(currentDate)){
+                        oszacowanyCzas.setText("Podlej kwiat natychmiastowo!");
+                    }else if (selectedDate.after(currentDate)){
+                        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(requireActivity(),
+                                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS},NOTIFICATION_PERMISSION_REQUEST_CODE);
                             Toast.makeText(getContext(), "Włącz powiadomienia", Toast.LENGTH_SHORT).show();
+                        }else{
+                            scheduleNotification(dataParts ,flower.getWhenToWater(), Integer.parseInt(timeParts[0]), Integer.parseInt(timeParts[1]), flower);
+                        }
+                    }
                 }else{
-
-                    scheduleNotification(Integer.parseInt(timeParts[0]), Integer.parseInt(timeParts[1]), flower);
-                    Toast.makeText(getContext(), "Pomyślnie ustawiono powiadomienie", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Uzupełnij pola", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+        usunAlarm.setOnClickListener(v -> cancelScheduledNotification());
 
 
         return view;
     }
 
+    private void cancelScheduledNotification() {
+        String workRequestId = sharedPreferences.getString(WORK_REQUEST_ID_KEY, null);
+        if (workRequestId != null) {
+            WorkManager.getInstance(requireContext()).cancelWorkById(UUID.fromString(workRequestId));
+            sharedPreferences.edit().remove(WORK_REQUEST_ID_KEY).apply();
+            Toast.makeText(getContext(), "Powiadomienie anulowane", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Brak powiadomienia do anulowania", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-    private void scheduleNotification(int hourOfDay, int minute, Flower flower) {
+
+    private void scheduleNotification(String[] givenDate,int day ,int hourOfDay, int minute, Flower flower) {
+
         // Set the time for the notification
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, Integer.parseInt(givenDate[2]));
+        calendar.set(Calendar.MONTH, Integer.parseInt(givenDate[1]) - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(givenDate[0]));
+        calendar.add(Calendar.DAY_OF_MONTH, day);
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
         long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
-        if (delay < 0) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-            delay = calendar.getTimeInMillis() - System.currentTimeMillis();
-        }
+
 
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -180,31 +220,30 @@ public class PrzypomnieniaFragment extends Fragment {
 
         WorkManager.getInstance(requireContext()).enqueue(notificationWork);
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(NOTIFICATION_ID_KEY, notificationCounter.get());
-        editor.apply();
+        sharedPreferences.edit().putString(WORK_REQUEST_ID_KEY, notificationWork.getId().toString()).apply();
+
+        Toast.makeText(getContext(), "Pomyślnie ustawiono powiadomienie", Toast.LENGTH_SHORT).show();
     }
 
-    private void openDateDialog(View view){
+    private void openDateDialog(View view, Flower flower){
         List<Integer> currentDate = getCurrentDate();
         DatePickerDialog datePicker = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 data.setText(String.format("%d/%d/%d", dayOfMonth, month+1, year));
-                updateOszacowanyCzas();
+                updateOszacowanyCzas(flower);
             }
         }, currentDate.get(2), currentDate.get(1) - 1, currentDate.get(0));
         datePicker.show();
     }
 
-    private void openTimeDialog(View view){
+    private void openTimeDialog(View view, Flower flower){
         List<Integer> currentTime = getCurrentTime();
         TimePickerDialog timePicker = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 godzina.setText(String.format("%02d:%02d", hourOfDay, minute));
-                updateOszacowanyCzas();
+                updateOszacowanyCzas(flower);
             }
         }, currentTime.get(0), currentTime.get(1), true);
         timePicker.show();
@@ -217,11 +256,18 @@ public class PrzypomnieniaFragment extends Fragment {
         return false;
     }
 
-    private void updateOszacowanyCzas(){
+    private void updateOszacowanyCzas(Flower flower){
         if(!godzina.getText().toString().isEmpty() && !data.getText().toString().isEmpty()){
             String[] dateParts = data.getText().toString().split("/");
             String[] timeParts = godzina.getText().toString().split(":");
-            oszacowanyCzas.setText(String.format("Nawodnienie w dniu: %s/%s/%s, %s:%s",dateParts[0], dateParts[1], dateParts[2], timeParts[0], timeParts[1]));
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, Integer.parseInt(dateParts[2]));
+            cal.set(Calendar.MONTH, Integer.parseInt(dateParts[1]));
+            cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateParts[0]));
+            cal.add(Calendar.DAY_OF_MONTH, flower.getWhenToWater());
+
+            oszacowanyCzas.setText(String.format("Nawodnienie w dniu: %s/%s/%s, %s:%s",cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH), cal.get(Calendar.YEAR), timeParts[0], timeParts[1]));
         }
     }
 
