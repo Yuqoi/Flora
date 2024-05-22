@@ -31,12 +31,13 @@ public class FlowerNotification extends Worker {
 
 
     private static String CHANNEL_ID = "flower_channel";
-    private static final String PREFERENCES_FILE = "com.example.notifications.preferences";
-    private static final String NOTIFICATION_DATA_KEY_PREFIX = "notification_data_";
     private static final AtomicInteger notificationCounter = new AtomicInteger(0);
 
     public FlowerNotification(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
+    }
+    public FlowerNotification() {
+        this(null, null);
     }
 
     @NonNull
