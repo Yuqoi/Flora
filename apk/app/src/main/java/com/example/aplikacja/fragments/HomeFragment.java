@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,18 +25,26 @@ import com.example.aplikacja.R;
 
 import com.example.aplikacja.activities.MyGardenSelectedFlower;
 import com.example.aplikacja.activities.NaukaActivity;
+import com.example.aplikacja.adapter.TrendsAdapter;
 import com.example.aplikacja.helpers.FragmentHelper;
 import com.example.aplikacja.adapter.HomeFlowerAdapter;
 import com.example.aplikacja.helpers.SelectListener;
 import com.example.aplikacja.models.Flower;
+import com.example.aplikacja.models.Trends;
 import com.example.aplikacja.sharedprefs.FlowerSharedPreferences;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,6 +57,8 @@ public class HomeFragment extends Fragment implements FragmentHelper {
 
     SearchView searchView;
     RecyclerView flowersRecyclerView;
+    RecyclerView trendingRecyclerView;
+    TrendsAdapter trendsAdapter;
 
     View emptyView;
 
@@ -56,6 +67,10 @@ public class HomeFragment extends Fragment implements FragmentHelper {
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseFirestore db;
+    DatabaseReference databaseReference;
+
+
+    ArrayList<Trends> trendsList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,10 +85,42 @@ public class HomeFragment extends Fragment implements FragmentHelper {
         flowersRecyclerView = view.findViewById(R.id.home_flowers_recyclerview);
         userName = view.findViewById(R.id.home_user_name);
         emptyView = view.findViewById(R.id.emptyView);
+        trendingRecyclerView = view.findViewById(R.id.home_trending_recyclerview);
+
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
+
+        trendsList = new ArrayList<>();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("trendy");
+
+
+        LinearLayoutManager layoutForTrends = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        trendsAdapter = new TrendsAdapter(view.getContext(), trendsList);
+        trendingRecyclerView.setAdapter(trendsAdapter);
+        trendingRecyclerView.setLayoutManager(layoutForTrends);
+
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Trends trend = new Trends((String) dataSnapshot.child("name").getValue(),
+                            (String) dataSnapshot.child("image_url").getValue());
+                    trendsList.add(trend);
+                }
+                trendsAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         FlowerSharedPreferences prefs = new FlowerSharedPreferences(view.getContext());
         List<Flower> flowerList = prefs.getFlowers();

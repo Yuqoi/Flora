@@ -11,9 +11,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+
 
 
 
@@ -40,10 +40,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.NaukaActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.WaterNotification"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

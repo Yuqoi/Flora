@@ -152,7 +152,13 @@ public class CameraActivity extends AppCompatActivity {
             if (maxConfidence < CONFIDENCE_THRESHOLD) {
                 displayRecognitionError();
             } else {
-                String[] classes = {"Zielistka Sternberga","mak","trojskrzyn"};
+                String[] classes = {"Lilak", "Krokus", "Goździk", "bratek",
+                        "Fiołek", "Trójskrzyn", "Zielistka sternberga", "Paproć",
+                        "Pelargonia", "róża", "Różanecznik", "Stokrotka",
+                        "Storczyk", "Tulipan", "Nagietek", "Mak",
+                        "Magnolia", "Lawenda", "Irys", "Hortensja",
+                        "Hiacynt", "astra chińska"
+                };
                 result.setText(classes[maxPos]);
                 nazwaKwiata.setText(result.getText());
                 result.setOnClickListener(new View.OnClickListener() {
