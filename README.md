@@ -10,7 +10,7 @@ https://github.com/user-attachments/assets/951a8bf1-3f5a-4ace-9eda-15db386b48a0
 
 - Fully written in Java 😎
 - Maintain your own collection of owned plants
-- Plant recognision based on photo (made with teachablemachine.withgoogle)
+- Plant recognition based on photo (made with teachablemachine.withgoogle)
 - Comprehensive range of plant data from **firebase database** (Unfortunately i deleted firebase collection so it won't work)
 - Watering notifications
 - Adding notes for each flower
