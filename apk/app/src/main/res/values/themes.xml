@@ -1,0 +1,68 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Aplikacja" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textViewStyle">@style/CustomFontStyle</item>
+        <item name="colorPrimary">@color/bgdark</item>
+        <item name="colorPrimaryVariant">@color/grayish</item>
+        <item name="android:statusBarColor">@color/bgdark</item>
+        <item name="colorAccent">@color/bgdark</item>
+    </style>
+
+
+    <style name="CustomFontStyle">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/fontcolor</item>
+    </style>
+
+    <style name="RoundedSquare">
+        <item name="cornerSize">20%</item>
+    </style>
+
+<!--    TODO: repair this-->
+    <style name="RoundedBottom">
+        <item name="cornerSizeBottomLeft">20%</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomRight">20%</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+    <style name="RoundedImage">
+        <item name="cornerSize">50%</item>
+
+    </style>
+
+    <style name="GridLayoutTextStyleForVariables">
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="GridLayoutTextStyleForNaming">
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="homeFragmentIconPanel">
+        <item name="android:layout_height">65dp</item>
+        <item name="android:layout_width">65dp</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+    <style name="homeFragmentDescriptionPanel">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+</resources>
