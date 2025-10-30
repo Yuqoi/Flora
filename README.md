@@ -1,3 +1,5 @@
+### **Had to remove previous repo due to commit that had unfavorable informations** 
+
 # Flora 🪴
 
 Flora is an Android application developed in Android Studio for a "Kalijski Konkurs Informatyczny" competition. The app is made up in Android Studio (Java) and is generally based about plants.
